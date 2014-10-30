@@ -3,6 +3,8 @@
     "name": "ChatWork Extension",
     "version": "0.37564.4",
     "description": "ChatWorkの痛みを緩和します。",
+    "homepage_url": "https://github.com/mayuki/ChatworkExtension",
+    "author": "Mayuki Sawatari",
     "content_scripts": [
         {
             "matches": [ "https://kcw.kddi.ne.jp/*", "https://www.chatwork.com/*" ],
