@@ -9,9 +9,31 @@ module ChatworkExtension.Settings {
             document.addEventListener('DOMContentLoaded', () => this.readySettingsView());
         }
         static readySettingsView(): void {
-            chrome.storage.sync.get(['extraSettings', 'states'], (items) => {
-                var settingsViewModel = new SettingsViewModel(items.states || {}, items.extraSettings || {});
-                ko.applyBindings(settingsViewModel, document.querySelector('#extensions'));
+            // InjectUserCustomScriptsとextraSettings, statesを待ってから実行
+            var waitCount = 2;
+            var items;
+            var next = () => {
+                if (--waitCount == 0) {
+                    var settingsViewModel = new SettingsViewModel(items.states || {}, items.extraSettings || {});
+                    ko.applyBindings(settingsViewModel, document.querySelector('#extensions'));
+                }
+            };
+
+            chrome.runtime.sendMessage({ method: 'readStorage', arguments: ['InjectUserCustomScripts'] }, (result: string) => {
+                if (result) {
+                    try {
+                        new Function("var ChatworkExtension = window.ChatworkExtension;" + result)();
+                    } catch (ex) {
+                        console.log('ChatworkExtension[InjectUserCustomScripts]: Exception');
+                        console.log(ex.message);
+                        console.log(ex.stack);
+                    }
+                }
+                next();
+            });
+            chrome.storage.sync.get(['extraSettings', 'states'], (_items) => {
+                items = _items;
+                next();
             });
         }
     }

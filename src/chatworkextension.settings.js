@@ -13,9 +13,31 @@ var ChatworkExtension;
                 });
             };
             Main.readySettingsView = function () {
-                chrome.storage.sync.get(['extraSettings', 'states'], function (items) {
-                    var settingsViewModel = new SettingsViewModel(items.states || {}, items.extraSettings || {});
-                    ko.applyBindings(settingsViewModel, document.querySelector('#extensions'));
+                // InjectUserCustomScriptsとextraSettings, statesを待ってから実行
+                var waitCount = 2;
+                var items;
+                var next = function () {
+                    if (--waitCount == 0) {
+                        var settingsViewModel = new SettingsViewModel(items.states || {}, items.extraSettings || {});
+                        ko.applyBindings(settingsViewModel, document.querySelector('#extensions'));
+                    }
+                };
+
+                chrome.runtime.sendMessage({ method: 'readStorage', arguments: ['InjectUserCustomScripts'] }, function (result) {
+                    if (result) {
+                        try  {
+                            new Function("var ChatworkExtension = window.ChatworkExtension;" + result)();
+                        } catch (ex) {
+                            console.log('ChatworkExtension[InjectUserCustomScripts]: Exception');
+                            console.log(ex.message);
+                            console.log(ex.stack);
+                        }
+                    }
+                    next();
+                });
+                chrome.storage.sync.get(['extraSettings', 'states'], function (_items) {
+                    items = _items;
+                    next();
                 });
             };
             return Main;
