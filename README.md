@@ -16,10 +16,9 @@
 
 How to install
 --------------
-1. Chromeのメニューから「拡張機能」を開くじゃろ?
-2. 右上の「デベロッパーモード」にチェックを入れるじゃろ?
-3. ChatworkExtensions.crxをChromeの「拡張機能」タブページにドロップするじゃろ?
-4. 完成
+Chrome ウェブストアからインストールできます。
+
+https://chrome.google.com/webstore/detail/chatwork-extension/kdpcnbofhlgnkpefjkngkpjbeebbabed?hl=ja
 
 設定は「拡張機能」のページから拡張の項目にある「オプション」というリンクをクリックすると開きます。
 
