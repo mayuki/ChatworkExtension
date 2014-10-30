@@ -1,0 +1,160 @@
+﻿/* -------------------------------------------------- */
+/* シンタックスハイライト                              */
+/* -------------------------------------------------- */
+.__x-syntaxhighlight-code {
+  font-family: 'Consolas', monospace;
+  line-height: 1.25;
+}
+#_sideContentTitle {
+  height: 0 !important;
+}
+#_chatFilterMenu {
+  height: 74px !important;
+}
+/* -------------------------------------------------- */
+/* TOリストの高さを伸ばす                              */
+/* -------------------------------------------------- */
+._cwLTList {
+  max-height: 360px !important;
+  height: 360px !important;
+}
+/* -------------------------------------------------- */
+/* 高さを変えるやつ                                    */
+/* -------------------------------------------------- */
+.__x-ResizeGroupListHeight-enabled .chatListPin {
+  top: 0;
+}
+.__x-ResizeGroupListHeight-enabled .chatListPin ._pin {
+  -webkit-transform: scale(0.6);
+}
+.__x-ResizeGroupListHeight-enabled .chatListTitleArea {
+  float: left;
+}
+.__x-ResizeGroupListHeight-enabled .chatListTitleArea + .incomplete {
+  position: absolute;
+  right: 0;
+  -webkit-transform: scale(0.6);
+  margin-left: 10px;
+  width: 100px;
+  text-align: left;
+}
+.__x-ResizeGroupListHeight-enabled #_roomListItems li {
+  height: 20px;
+  min-height: 0;
+}
+.__x-ResizeGroupListHeight-enabled #_roomListItems .roomIcon img {
+  width: 16px;
+  height: 16px;
+}
+.__x-ResizeGroupListHeight-enabled .chatListMeta {
+  left: 31px;
+  font-size: 0.9em;
+}
+.__x-ResizeGroupListHeight-enabled .chatListMeta::after {
+  content: '';
+  display: block;
+  clear: both;
+}
+/* -------------------------------------------------- */
+/* フラットスタイル                                    */
+/* -------------------------------------------------- */
+.__x-FlatStyle-enabled {
+  /* ---- グループリスト系 ----- */
+  /* 左側パネル */
+  /* グループ名の項目 */
+  /* ピン止め */
+  /* ---- 色オーバーライド ----- */
+  /* --- グループ名みたいなヘッダー的な奴 ----- */
+  /* --- ボタン ----- */
+  /* テキストボックス */
+}
+.__x-FlatStyle-enabled .sideContent {
+  background: #f0f0f0;
+}
+.__x-FlatStyle-enabled .menuListTitle > li {
+  overflow: hidden;
+  padding: 2.5px 5px;
+  border-bottom-color: transparent;
+  border-top-color: rgba(0, 0, 0, 0.12);
+}
+.__x-FlatStyle-enabled ._roomLink.__x-pinnedLink {
+  background-color: #e8e8e8;
+}
+.__x-FlatStyle-enabled ._roomLink.__x-pinnedLink + ._roomLink:not(.__x-pinnedLink) {
+  border-top: 4px solid #ccc;
+}
+.__x-FlatStyle-enabled .sideContentHl {
+  background: #f0f0f0;
+  color: #000;
+  border-color: #f0f0f0;
+}
+.__x-FlatStyle-enabled .chatFilterMenu {
+  box-shadow: none;
+  border-bottom-color: #f0f0f0;
+}
+.__x-FlatStyle-enabled .chatListUnreadNum {
+  box-shadow: none;
+  background-image: none;
+}
+.__x-FlatStyle-enabled .chatRoomListArea .menuListTitleSelected,
+.__x-FlatStyle-enabled .chatRoomListArea .menuListTitleSelected:hover {
+  text-shadow: none;
+}
+.__x-FlatStyle-enabled .sideContentHl {
+  /*display: none;
+        height: 0;
+        overflow: hidden;*/
+}
+.__x-FlatStyle-enabled .sideTitleBtn {
+  right: 40px;
+  z-index: 2;
+}
+.__x-FlatStyle-enabled .chatContent {
+  box-shadow: none;
+}
+.__x-FlatStyle-enabled .mainContent {
+  border-radius: 0;
+}
+.__x-FlatStyle-enabled .globalHeader {
+  border-color: #232323;
+}
+.__x-FlatStyle-enabled .globalHeader:after {
+  display: none;
+}
+.__x-FlatStyle-enabled .adminNavi,
+.__x-FlatStyle-enabled .helpMenu,
+.__x-FlatStyle-enabled .myStatusButton {
+  border-right-color: transparent;
+  border-left-color: transparent;
+}
+.__x-FlatStyle-enabled .mainContentHl {
+  background-image: none;
+  border-radius: 0;
+  background: #f0f0f0;
+  border-color: #f0f0f0;
+  color: #000;
+}
+.__x-FlatStyle-enabled .button {
+  background-image: none;
+  box-shadow: none;
+  border-radius: 0;
+}
+.__x-FlatStyle-enabled .sideContentMenu .button,
+.__x-FlatStyle-enabled .sideContentMenu .button:hover,
+.__x-FlatStyle-enabled .chatRoomHeaderBtn .button,
+.__x-FlatStyle-enabled .chatRoomHeaderBtn .button:hover {
+  border-color: transparent;
+  background: transparent;
+  box-shadow: none;
+}
+.__x-FlatStyle-enabled .chatFilterMenu .btnNavList li {
+  min-width: 42px;
+}
+.__x-FlatStyle-enabled textarea,
+.__x-FlatStyle-enabled select,
+.__x-FlatStyle-enabled input[type="search"],
+.__x-FlatStyle-enabled input[type="text"],
+.__x-FlatStyle-enabled input[type="date"] {
+  box-shadow: none;
+  border-radius: 0;
+}

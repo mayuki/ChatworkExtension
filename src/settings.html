@@ -1,0 +1,87 @@
+﻿<!DOCTYPE html>
+<meta charset="utf-8"/>
+<title>Chatwork Extensions - Options</title>
+
+<!-- スタイル付けたいお… -->
+<!-- https://code.google.com/p/chromium/issues/detail?id=25317 -->
+<!-- http://roykolak.github.io/chrome-bootstrap/ -->
+<link rel="stylesheet" href="chrome-bootstrap.min.css" />
+<style>
+    .chrome-bootstrap h1 {
+        height: auto;
+    }
+</style>
+
+<script src="knockout-3.2.0.js"></script>
+<script src="zlib.min.js"></script>
+<script src="chatworkextension.core.js"></script>
+<script src="chatworkextension.settings.js"></script>
+<script src="chatworkextension.extensions.js"></script>
+<script src="chatworkextension.starter.js"></script>
+
+<body class="chrome-bootstrap">
+    <div class="frame">
+        <div class="navigation">
+            <h1><a href="#">Chatwork Extensions</a></h1>
+            <ul class="menu">
+                <li class="selected">
+                    <a href="#">拡張</a>
+                </li>
+            </ul>
+        </div>
+        <div class="mainview view">
+            <div id="extensions" class="selected">
+                <header>
+                    <h1>拡張</h1>
+                    <div class="corner">
+                        <button data-bind="click: onResetButtonClicked">すべて規定値にリセット</button>
+                    </div>
+                </header>
+                <div class="content">
+                    <div id="settingEntries" data-bind="foreach: entries">
+                        <div class="setting-entry" data-bind="ifnot: metadata.advanced">
+                            <h2 data-bind="text: title">Extension Name</h2>
+                            <p data-bind="text: metadata.description">Description</p>
+                            <select data-bind="value: value">
+                                <option value="" data-bind="text: metadata.disableByDefault ? '既定値 (無効)' : '既定値 (有効)'"></option>
+                                <option value="true">有効</option>
+                                <option value="false">無効</option>
+                            </select>
+                            <!-- ko if: metadata.extraSettingType == ChatworkExtension.ExtraSettingType.TextArea -->
+                                <div class="extra-setting extra-setting-TextArea">
+                                    <textarea data-bind="value: extraSettingValue" rows="10" cols="80"></textarea>
+                                </div>
+                            <!-- /ko -->
+                        </div>
+                    </div>
+
+                    <header style="position: relative; margin-top: 30px;">
+                        <h1>高度な設定</h1>
+                        <div class="corner">
+                            <a href="#" data-bind="click: showAdvanced, ifnot: isAdvancedVisible">表示する</a>
+                        </div>
+                    </header>
+                    <div data-bind="if: isAdvancedVisible">
+                        <div id="settingEntries" data-bind="foreach: entries">
+                            <div class="setting-entry" data-bind="if: metadata.advanced">
+                                <h2 data-bind="text: title">Extension Name</h2>
+                                <p data-bind="text: metadata.description">Description</p>
+                                <select data-bind="value: value">
+                                    <option value="" data-bind="text: metadata.disableByDefault ? '既定値 (無効)' : '既定値 (有効)'"></option>
+                                    <option value="true">有効</option>
+                                    <option value="false">無効</option>
+                                </select>
+
+                                <!-- ko if: metadata.extraSettingType == ChatworkExtension.ExtraSettingType.TextArea -->
+                                <div class="extra-setting extra-setting-TextArea">
+                                    <textarea data-bind="value: extraSettingValue" rows="10" cols="80"></textarea>
+                                </div>
+                                <!-- /ko -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
