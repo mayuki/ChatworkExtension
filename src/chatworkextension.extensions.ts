@@ -21,7 +21,7 @@ module ChatworkExtension.Extensions {
             styleE.href = chrome.extension.getURL('style.css');
             window.document.head.appendChild(styleE);
 
-            (<HTMLElement>window.document.querySelector('#_sideContentTitle')).style.height = '0';
+            //(<HTMLElement>window.document.querySelector('#_sideContentTitle')).style.height = '0';
         }
     }
 

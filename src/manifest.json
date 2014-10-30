@@ -1,8 +1,8 @@
-{
+﻿{
     "manifest_version": 2,
     "name": "ChatWork Extension",
     "version": "0.37564.4",
-    "description": "ChatWork or die",
+    "description": "ChatWorkの痛みを緩和します。",
     "content_scripts": [
         {
             "matches": [ "https://kcw.kddi.ne.jp/*", "https://www.chatwork.com/*" ],
@@ -17,11 +17,16 @@
             "run_at": "document_start"
         }
     ],
-  "web_accessible_resources": ["style.css", "extensions/*.css", "chatworkextension.bridge.js", "chatworkextension.customscripts.js","dicts/*.txt", "migemojs/migemo.js", "highlightjs/styles/*.css"],
-  "options_page": "settings.html",
-  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
-  "permissions":  [ "storage" ],
-  "background": {
-     "scripts": [ "chatworkextension.background.js" ]
-  }
+    "web_accessible_resources": [ "style.css", "extensions/*.css", "chatworkextension.bridge.js", "chatworkextension.customscripts.js", "dicts/*.txt", "migemojs/migemo.js", "highlightjs/styles/*.css" ],
+    "options_page": "settings.html",
+    "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+    "permissions": [ "storage" ],
+    "background": {
+        "scripts": [ "chatworkextension.background.js" ]
+    },
+    "icons": {
+        "16": "icon16.png",
+        "48": "icon48.png",
+        "128": "icon128.png"
+    }
 }

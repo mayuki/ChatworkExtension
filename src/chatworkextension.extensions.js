@@ -25,8 +25,7 @@ var ChatworkExtension;
                 styleE.rel = 'stylesheet';
                 styleE.href = chrome.extension.getURL('style.css');
                 window.document.head.appendChild(styleE);
-
-                window.document.querySelector('#_sideContentTitle').style.height = '0';
+                //(<HTMLElement>window.document.querySelector('#_sideContentTitle')).style.height = '0';
             };
             InjectCustomStylesheets.metadata = {
                 description: "カスタムスタイルシートを提供します。この拡張を無効にした場合、他の拡張に影響が出る場合があります。",
