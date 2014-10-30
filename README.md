@@ -40,6 +40,14 @@ How to install
 - 単体アプリ化
   - 書き直し…
 
+License
+-------
+- ChatworkExtension本体: MIT License
+- migemojs: GPL2 | Migemo.js - Yet another Migemo implementation in JavaScript Copyright 2011 Wakaba <w@suika.fam.cx>
+- Highlight.js: MIT License | Copyright (c) 2006, Ivan Sagalaev All rights reserved.
+
+つまるところパッケージ全体ではGPLになります。
+
 作者について
 -----------
 Mayuki Sawatari <mayuki@misuzilla.org> | @mayuki
