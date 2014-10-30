@@ -11,7 +11,7 @@ module ChatworkExtension {
         private static syncItems: any;
 
         static setup(): void {
-            // InjectUserCustomScripts のデータをとってきておく(手抜きなので完了を待機しない/即返ってきてる前提)
+            // states, extraSettings, InjectUserCustomScripts のデータをとってきてから開始
             var waitCount = 2;
             var next = () => {
                 if (--waitCount == 0) {

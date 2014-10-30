@@ -7,7 +7,7 @@ var ChatworkExtension;
         }
         ExtensionManager.setup = function () {
             var _this = this;
-            // InjectUserCustomScripts のデータをとってきておく(手抜きなので完了を待機しない/即返ってきてる前提)
+            // states, extraSettings, InjectUserCustomScripts のデータをとってきてから開始
             var waitCount = 2;
             var next = function () {
                 if (--waitCount == 0) {
