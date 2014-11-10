@@ -97,13 +97,6 @@ var ChatworkExtension;
                     script.src = chrome.extension.getURL(src);
                     window.document.body.appendChild(script);
                 });
-
-                // MigemoJS
-                var scriptE = document.createElement('script');
-                scriptE.type = 'text/javascript';
-                scriptE.src = chrome.extension.getURL('migemojs/migemo.js');
-                scriptE.id = 'script-migemojs';
-                window.document.body.appendChild(scriptE);
             };
             InjectWebPageContextCustomScripts.metadata = {
                 hidden: true
@@ -197,8 +190,7 @@ var ChatworkExtension;
                 var value = this._inputE.value;
 
                 if (value != null && value != '') {
-                    var migemoRe = window.MigemoJS.getRegExp(value);
-                    this._filterRe = new RegExp((migemoRe ? migemoRe + '|' : '') + value, 'i');
+                    this._filterRe = new RegExp(value, 'i');
                     [].forEach.call(document.querySelectorAll('#_roomListItems > li'), function (liE) {
                         var label = liE.getAttribute('aria-label');
                         liE.style.display = _this._filterRe.test(label) ? '' : 'none';
@@ -332,24 +324,6 @@ var ChatworkExtension;
             return FlatStyle;
         })(ChatworkExtension.ExtensionBase);
         Extensions.FlatStyle = FlatStyle;
-
-        /**
-        * Toリストの検索を拡張(Migemo)
-        */
-        var MigemizeToList = (function (_super) {
-            __extends(MigemizeToList, _super);
-            function MigemizeToList() {
-                _super.apply(this, arguments);
-            }
-            MigemizeToList.prototype.onReady = function () {
-                document.body.classList.add('__x-MigemizeToList-enabled');
-            };
-            MigemizeToList.metadata = {
-                description: "Toリストの検索を拡張する機能を提供します。"
-            };
-            return MigemizeToList;
-        })(ChatworkExtension.ExtensionBase);
-        Extensions.MigemizeToList = MigemizeToList;
 
         /**
         * キーワード反応

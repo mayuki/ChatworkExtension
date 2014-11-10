@@ -75,13 +75,6 @@ module ChatworkExtension.Extensions {
                 script.src = chrome.extension.getURL(src);
                 window.document.body.appendChild(script);
             });
-
-            // MigemoJS
-            var scriptE = document.createElement('script');
-            scriptE.type = 'text/javascript';
-            scriptE.src = chrome.extension.getURL('migemojs/migemo.js');
-            scriptE.id = 'script-migemojs';
-            window.document.body.appendChild(scriptE);
         }
     }
 
@@ -157,8 +150,7 @@ module ChatworkExtension.Extensions {
             var value = this._inputE.value;
 
             if (value != null && value != '') {
-                var migemoRe = (<any>window).MigemoJS.getRegExp(value);
-                this._filterRe = new RegExp((migemoRe ? migemoRe + '|' : '') + value, 'i');
+                this._filterRe = new RegExp(value, 'i');
                 [].forEach.call(document.querySelectorAll('#_roomListItems > li'), (liE: HTMLLIElement) => {
                     var label = liE.getAttribute('aria-label');
                     liE.style.display = this._filterRe.test(label) ? '' : 'none';
@@ -269,18 +261,6 @@ module ChatworkExtension.Extensions {
 
         onReady(): void {
             document.body.classList.add('__x-FlatStyle-enabled');
-        }
-    }
-    /**
-     * Toリストの検索を拡張(Migemo)
-     */
-    export class MigemizeToList extends ChatworkExtension.ExtensionBase {
-        static metadata = {
-            description: "Toリストの検索を拡張する機能を提供します。"
-        }
-
-        onReady(): void {
-            document.body.classList.add('__x-MigemizeToList-enabled');
         }
     }
 

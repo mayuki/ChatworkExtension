@@ -6,10 +6,9 @@
 - 見た目の変更
 - グループリスト
   - 一覧性の向上(リストの項目の高さを細くして数を多く表示)
-  - Migemoによるインクリメンタル絞込検索
 - チャット部分
   - Toリストの拡大
-  - Toリストの検索拡張(Migemo+その他プロフィール項目(Email,Twitter,組織)も含める)
+  - Toリストの検索拡張(その他プロフィール項目(Email,Twitter,組織)も含める)
   - Office 365ドキュメント(PowerPoint/Excel/Word)のダイアログでのプレビュー
   - コードのシンタックスハイライト(```で囲むやつ)
   - キーワード機能を提供します
@@ -42,10 +41,7 @@ https://chrome.google.com/webstore/detail/chatwork-extension/kdpcnbofhlgnkpefjkn
 License
 -------
 - ChatworkExtension本体: MIT License
-- migemojs: GPL2 | Migemo.js - Yet another Migemo implementation in JavaScript Copyright 2011 Wakaba <w@suika.fam.cx>
 - Highlight.js: MIT License | Copyright (c) 2006, Ivan Sagalaev All rights reserved.
-
-つまるところパッケージ全体ではGPLになります。
 
 作者について
 -----------
