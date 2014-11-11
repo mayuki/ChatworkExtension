@@ -1,7 +1,7 @@
 ﻿{
     "manifest_version": 2,
     "name": "ChatWork Extension",
-    "version": "0.37564.4",
+    "version": "0.37564.5",
     "description": "ChatWorkの痛みを緩和します。",
     "homepage_url": "https://github.com/mayuki/ChatworkExtension",
     "author": "Mayuki Sawatari",
