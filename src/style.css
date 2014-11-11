@@ -99,6 +99,7 @@
 .__x-FlatStyle-enabled .chatRoomListArea .menuListTitleSelected,
 .__x-FlatStyle-enabled .chatRoomListArea .menuListTitleSelected:hover {
   text-shadow: none;
+  background-color: #98958a;
 }
 .__x-FlatStyle-enabled .sideContentHl {
   /*display: none;
@@ -161,3 +162,4 @@
   box-shadow: none;
   border-radius: 0;
 }
+/*# sourceMappingURL=style.css.map */
