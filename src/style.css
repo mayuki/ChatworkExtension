@@ -138,6 +138,8 @@
   background-image: none;
   box-shadow: none;
   border-radius: 0;
+  border-top: 1px solid #b8b9b6;
+  border-bottom: 1px solid #b8b9b6;
 }
 .__x-FlatStyle-enabled .sideContentMenu .button,
 .__x-FlatStyle-enabled .sideContentMenu .button:hover,
@@ -148,7 +150,8 @@
   box-shadow: none;
 }
 .__x-FlatStyle-enabled .chatFilterMenu .btnNavList li {
-  min-width: 42px;
+  min-width: 32px;
+  max-width: 48px;
 }
 .__x-FlatStyle-enabled textarea,
 .__x-FlatStyle-enabled select,
