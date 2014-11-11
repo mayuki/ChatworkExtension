@@ -352,6 +352,24 @@ var ChatworkExtension;
         Extensions.MigemizeToList = MigemizeToList;
 
         /**
+        * プレビューダイアログをクリックシールド部分をクリックしても閉じる
+        */
+        var ClosePreviewDialogOnBackgroundClicked = (function (_super) {
+            __extends(ClosePreviewDialogOnBackgroundClicked, _super);
+            function ClosePreviewDialogOnBackgroundClicked() {
+                _super.apply(this, arguments);
+            }
+            ClosePreviewDialogOnBackgroundClicked.prototype.onReady = function () {
+                document.body.classList.add('__x-ClosePreviewDialogOnBackgroundClicked-enabled');
+            };
+            ClosePreviewDialogOnBackgroundClicked.metadata = {
+                description: "プレビューダイアログの背景部分をクリックしても閉じる機能を提供します。"
+            };
+            return ClosePreviewDialogOnBackgroundClicked;
+        })(ChatworkExtension.ExtensionBase);
+        Extensions.ClosePreviewDialogOnBackgroundClicked = ClosePreviewDialogOnBackgroundClicked;
+
+        /**
         * キーワード反応
         */
         var KeywordHighlight = (function (_super) {
