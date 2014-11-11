@@ -135,3 +135,13 @@ $(() => {
         this.setOption(i)
     }
 });
+
+
+// プレビューダイアログの背景をクリックしたら閉じるやつ
+$(() => {
+    if (!document.body.classList.contains('__x-ClosePreviewDialogOnBackgroundClicked-enabled')) return;
+
+    $(document).on('click', '._cwDGBase:visible', (e) => {
+        $(e.target).find('.dialog').data('cwui-cwDialog').close();
+    });
+});
