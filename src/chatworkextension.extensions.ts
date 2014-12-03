@@ -184,29 +184,6 @@ module ChatworkExtension.Extensions {
     }
 
     /**
-     * Office 365のリンクをプレビューにする
-     */
-    export class ReplaceO365PreviewLinks extends ChatworkExtension.ExtensionBase {
-        static metadata = {
-            description: "SharePointやOneDriveのドキュメントへのリンクにプレビューを提供します。"
-        }
-
-        onChatMessageReceived(element: HTMLElement): void {
-            var anchors = element.querySelectorAll('a[href*="sourcedoc="]');
-            [].forEach.call(anchors, (elem: HTMLAnchorElement) => {
-                var anchorE = document.createElement('a');
-                anchorE.target = '_blank';
-                //anchorE.href = elem.href;
-                anchorE.className = '_previewLink timelineLinkAppend';
-                anchorE.textContent = 'プレビュー';
-                anchorE.setAttribute('data-url', elem.href);
-                anchorE.setAttribute('data-type', 'x-o365');
-                elem.insertAdjacentElement('afterend', anchorE);
-            });
-        }
-    }
-
-    /**
      * シンタックスハイライトするよ
      */
     export class SyntaxHighlighter extends ChatworkExtension.ExtensionBase {

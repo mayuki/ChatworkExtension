@@ -234,35 +234,6 @@ var ChatworkExtension;
         Extensions.AddPinnedGroups = AddPinnedGroups;
 
         /**
-        * Office 365のリンクをプレビューにする
-        */
-        var ReplaceO365PreviewLinks = (function (_super) {
-            __extends(ReplaceO365PreviewLinks, _super);
-            function ReplaceO365PreviewLinks() {
-                _super.apply(this, arguments);
-            }
-            ReplaceO365PreviewLinks.prototype.onChatMessageReceived = function (element) {
-                var anchors = element.querySelectorAll('a[href*="sourcedoc="]');
-                [].forEach.call(anchors, function (elem) {
-                    var anchorE = document.createElement('a');
-                    anchorE.target = '_blank';
-
-                    //anchorE.href = elem.href;
-                    anchorE.className = '_previewLink timelineLinkAppend';
-                    anchorE.textContent = 'プレビュー';
-                    anchorE.setAttribute('data-url', elem.href);
-                    anchorE.setAttribute('data-type', 'x-o365');
-                    elem.insertAdjacentElement('afterend', anchorE);
-                });
-            };
-            ReplaceO365PreviewLinks.metadata = {
-                description: "SharePointやOneDriveのドキュメントへのリンクにプレビューを提供します。"
-            };
-            return ReplaceO365PreviewLinks;
-        })(ChatworkExtension.ExtensionBase);
-        Extensions.ReplaceO365PreviewLinks = ReplaceO365PreviewLinks;
-
-        /**
         * シンタックスハイライトするよ
         */
         var SyntaxHighlighter = (function (_super) {
