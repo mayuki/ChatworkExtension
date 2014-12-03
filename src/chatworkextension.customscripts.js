@@ -59,9 +59,6 @@ $(function () {
         if (type == 'x-image') {
             widget.data.url = url;
             openCustom_Image.apply(widget, arguments);
-        } else if (type == 'x-o365') {
-            widget.data.url = url;
-            openCustom_O365.apply(widget, arguments);
         } else {
             // オリジナルを呼ぶ
             origOpen.apply(widget, arguments);
@@ -109,43 +106,6 @@ $(function () {
             i.height = l + TM.dialog_header_height + TM.dialog_footer_height;
             this.setOption(i);
         }).apply(this);
-    }
-
-    var G = null;
-    function openCustom_O365(b, d, e, f) {
-        var a = $("#_previewLinkContent");
-        var i = {}, h = "", g = TM.dialog_header_height + TM.dialog_footer_height, o = !0, m = !1, n = !1, q = "auto", j = function (a, b, d, e) {
-            typeof a == "function" && (a = a());
-            var f = "";
-            o && (f = 'sandbox="allow-scripts allow-same-origin allow-popups allow-forms"');
-            return "<iframe " + f + ' src="' + a + '" width="' + b + '" height="' + d + '" style="margin:auto" frameborder="0" scrolling="' + e + '" seamless webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>';
-        };
-        this.data.url = d;
-        a.empty();
-        G !== null && (G.abort(), G = null);
-
-        f = d;
-
-         {
-            m = !0;
-            o = !1;
-            i.title = "Office 365";
-            h = d.replace(/^([^?]+)\?.*?(sourcedoc=[^&]+).*/, '$1?$2&action=interactivepreview&wdSmallView=1');
-        }
-
-        var e = $C("document"), d = e.width(), e = e.height(), k, l;
-        if (m) {
-            this.$el.removeClass("previewFullDialog");
-            g += TM.preview_dialog_height_padding;
-            k = 1120;
-            for (l = 840; k > 160 && (d < k + 40 || e < l + g + 40);)
-                k -= 160, l -= 120;
-            i.width = k + TM.preview_dialog_width_padding;
-        } else
-            this.$el.addClass("previewFullDialog"), k = d - 40, l = e - g - 40, i.width = k;
-        i.height = l + g;
-        b && f && (n ? $("#_previewLinkContent").html('<div style="margin:auto"><img src="./imagenew/all/common/loader/img_loader_gray.gif" />' + L.loading + "</div>") : $("#_previewLinkContent").html(j(h, k, l, q)));
-        this.setOption(i);
     }
 });
 
