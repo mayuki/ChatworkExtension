@@ -209,6 +209,14 @@ module ChatworkExtension.Extensions {
         }
 
         onChatMessageReceived(element: HTMLElement): void {
+            // [code]...[/code]
+            var codes = element.querySelectorAll('code.chatCode');
+            [].forEach.call(codes, (elem: HTMLElement) => {
+                elem.classList.add('hljs');
+                elem.innerHTML = (<any>window).hljs.highlightAuto(elem.innerHTML).value;
+            });
+
+            // ```...```
             var pres = element.querySelectorAll('pre');
             [].forEach.call(pres, (elem: HTMLPreElement) => {
                 if (elem.innerHTML.indexOf('```') == -1 && !elem.innerHTML.match(/^C#/m)) {

@@ -259,6 +259,14 @@ var ChatworkExtension;
             };
 
             SyntaxHighlighter.prototype.onChatMessageReceived = function (element) {
+                // [code]...[/code]
+                var codes = element.querySelectorAll('code.chatCode');
+                [].forEach.call(codes, function (elem) {
+                    elem.classList.add('hljs');
+                    elem.innerHTML = window.hljs.highlightAuto(elem.innerHTML).value;
+                });
+
+                // ```...```
                 var pres = element.querySelectorAll('pre');
                 [].forEach.call(pres, function (elem) {
                     if (elem.innerHTML.indexOf('```') == -1 && !elem.innerHTML.match(/^C#/m)) {
