@@ -263,7 +263,7 @@ var ChatworkExtension;
                 var codes = element.querySelectorAll('code.chatCode');
                 [].forEach.call(codes, function (elem) {
                     elem.classList.add('hljs');
-                    elem.innerHTML = window.hljs.highlightAuto(elem.innerHTML).value;
+                    elem.innerHTML = window.hljs.highlightAuto(elem.textContent).value;
                 });
 
                 // ```...```

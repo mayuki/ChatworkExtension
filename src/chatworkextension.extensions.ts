@@ -213,7 +213,7 @@ module ChatworkExtension.Extensions {
             var codes = element.querySelectorAll('code.chatCode');
             [].forEach.call(codes, (elem: HTMLElement) => {
                 elem.classList.add('hljs');
-                elem.innerHTML = (<any>window).hljs.highlightAuto(elem.innerHTML).value;
+                elem.innerHTML = (<any>window).hljs.highlightAuto(elem.textContent).value;
             });
 
             // ```...```
