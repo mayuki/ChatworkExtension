@@ -1,24 +1,20 @@
+/// <reference path="_references.d.ts" />
 var ChatworkExtension;
 (function (ChatworkExtension) {
+    var Bridge;
     (function (Bridge) {
         var InitializeWatcher = (function () {
             function InitializeWatcher() {
             }
             InitializeWatcher.setup = function () {
-                new ValueObserver(function () {
-                    return window.CW && CW.init_loaded;
-                }, function () {
-                    return InitializeWatcher.onChatworkReady();
-                });
+                new ValueObserver(function () { return window.CW && CW.init_loaded; }, function () { return InitializeWatcher.onChatworkReady(); });
             };
-
             InitializeWatcher.onChatworkReady = function () {
                 window.postMessage({ sender: "ChatworkExtension.Bridge.InitializeWatcher", command: 'Ready', value: 1 }, "*");
             };
             return InitializeWatcher;
         })();
         Bridge.InitializeWatcher = InitializeWatcher;
-
         var CWBridge = (function () {
             function CWBridge() {
             }
@@ -26,10 +22,11 @@ var ChatworkExtension;
                 window.addEventListener('message', function (e) {
                     if (e.data.sender == 'ChatworkExtension.ExtensionManager' && e.data.command == 'CallCW') {
                         var result, isError;
-                        try  {
+                        try {
                             isError = false;
                             result = CW[e.data.method].apply(CW, e.data.arguments);
-                        } catch (e) {
+                        }
+                        catch (e) {
                             isError = true;
                             result = e.toString();
                         }
@@ -40,7 +37,6 @@ var ChatworkExtension;
             return CWBridge;
         })();
         Bridge.CWBridge = CWBridge;
-
         var ValueObserver = (function () {
             function ValueObserver(onCheck, onComplete) {
                 var _this = this;
@@ -48,9 +44,10 @@ var ChatworkExtension;
                 this._onComplete = onComplete;
                 this._timer = setInterval(function () {
                     if (_this._onCheck()) {
-                        try  {
+                        try {
                             _this._onComplete();
-                        } catch (e) {
+                        }
+                        catch (e) {
                         }
                         _this.dispose();
                     }
@@ -64,9 +61,7 @@ var ChatworkExtension;
             };
             return ValueObserver;
         })();
-    })(ChatworkExtension.Bridge || (ChatworkExtension.Bridge = {}));
-    var Bridge = ChatworkExtension.Bridge;
+    })(Bridge = ChatworkExtension.Bridge || (ChatworkExtension.Bridge = {}));
 })(ChatworkExtension || (ChatworkExtension = {}));
-
 ChatworkExtension.Bridge.InitializeWatcher.setup();
 ChatworkExtension.Bridge.CWBridge.setup();
