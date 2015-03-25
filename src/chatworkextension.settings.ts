@@ -1,10 +1,12 @@
-﻿/// <reference path="chatwork.d.ts" />
+﻿/// <reference path="references.d.ts" />
 declare var ko: any;
 
 module ChatworkExtension.Settings {
     declare var chrome: any;
 
     export class Main {
+        private static injectUserCustomScripts: string[] = [];
+
         static setup(): void {
             document.addEventListener('DOMContentLoaded', () => this.readySettingsView());
         }
@@ -14,21 +16,25 @@ module ChatworkExtension.Settings {
             var items;
             var next = () => {
                 if (--waitCount == 0) {
-                    var settingsViewModel = new SettingsViewModel(items.states || {}, items.extraSettings || {});
-                    ko.applyBindings(settingsViewModel, document.querySelector('#extensions'));
-                }
-            };
-
-            chrome.runtime.sendMessage({ method: 'readStorage', arguments: ['InjectUserCustomScripts'] }, (result: string) => {
-                if (result) {
                     try {
-                        new Function("var ChatworkExtension = window.ChatworkExtension;" + result)();
+                        new Function("var ChatworkExtension = window.ChatworkExtension;" + this.injectUserCustomScripts.join(";\n"))();
                     } catch (ex) {
                         console.log('ChatworkExtension[InjectUserCustomScripts]: Exception');
                         console.log(ex.message);
                         console.log(ex.stack);
                     }
+
+                    var settingsViewModel = new SettingsViewModel(items.states || {}, items.extraSettings || {});
+                    ko.applyBindings(settingsViewModel, document.querySelector('#extensions'));
                 }
+            };
+
+            chrome.runtime.sendMessage({ method: 'getExternalCustomScripts', arguments: [] },(result: IExternalCustomScriptStorage) => {
+                Object.keys(result).forEach(x => this.injectUserCustomScripts.push(result[x].body));
+                next();
+            });
+            chrome.runtime.sendMessage({ method: 'readStorage', arguments: ['InjectUserCustomScripts'] },(result: string) => {
+                if (result) { this.injectUserCustomScripts.push(result); }
                 next();
             });
             chrome.storage.sync.get(['extraSettings', 'states'], (_items) => {

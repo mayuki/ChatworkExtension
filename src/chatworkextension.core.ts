@@ -1,5 +1,4 @@
-/// <reference path="chatwork.d.ts" />
-declare var chrome: any;
+/// <reference path="references.d.ts" />
 
 module ChatworkExtension {
     export class ExtensionManager {
@@ -7,19 +6,23 @@ module ChatworkExtension {
         static extensions: IExtension[] = [];
 
         private static _callBridgeQueue = {};
-        private static injectUserCustomScripts: string = null;
+        private static injectUserCustomScripts: string[] = [];
         private static syncItems: any;
 
         static setup(): void {
-            // states, extraSettings, InjectUserCustomScripts のデータをとってきてから開始
-            var waitCount = 2;
+            // states, extraSettings, InjectUserCustomScripts, ExternalInjectUserCustomScripts のデータをとってきてから開始
+            var waitCount = 3;
             var next = () => {
                 if (--waitCount == 0) {
                     this.setup_(this.syncItems.states || {}, this.syncItems.extraSettings || {});
                 }
             }
+            chrome.runtime.sendMessage({ method: 'getExternalCustomScripts', arguments: [] },(result: IExternalCustomScriptStorage) => {
+                Object.keys(result).forEach(x => this.injectUserCustomScripts.push(result[x].body));
+                next();
+            });
             chrome.runtime.sendMessage({ method: 'readStorage', arguments: ['InjectUserCustomScripts'] }, (result: string) => {
-                this.injectUserCustomScripts = result;
+                if (result) { this.injectUserCustomScripts.push(result); }
                 next();
             });
             chrome.storage.sync.get(['states', 'extraSettings'], (items: any) => {
@@ -31,7 +34,7 @@ module ChatworkExtension {
             // InjectUserCustomScriptsだけは特殊扱いで先にevalする
             if (this.injectUserCustomScripts) {
                 try {
-                    new Function("var ChatworkExtension = window.ChatworkExtension;" + this.injectUserCustomScripts)();
+                    new Function("var ChatworkExtension = window.ChatworkExtension;" + this.injectUserCustomScripts.join(";\n"))();
                 } catch (ex) {
                     console.log('ChatworkExtension[InjectUserCustomScripts]: Exception');
                     console.log(ex.message);
@@ -238,6 +241,10 @@ module ChatworkExtension {
         advanced: boolean;
         extraSettingType: ExtraSettingType;
         extraSettingLocalOnly: boolean; // これが有効な時は localStorage に格納する(容量対策)
+    }
+
+    export interface IExternalCustomScriptStorage {
+        [key: string]: { body: string };
     }
 }
 

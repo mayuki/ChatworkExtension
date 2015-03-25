@@ -1,3 +1,5 @@
+/// <reference path="references.d.ts" />
+
 module ChatworkExtension.Bridge {
     export class InitializeWatcher {
         static setup(): void {

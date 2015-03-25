@@ -1,4 +1,4 @@
-﻿/// <reference path="chatwork.d.ts" />
+﻿/// <reference path="references.d.ts" />
 
 //
 // ここにIExtensionを実装したクラス(実装してなくても)をペコペコ並べると勝手に読み込みます。

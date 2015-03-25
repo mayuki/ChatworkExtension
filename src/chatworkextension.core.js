@@ -1,5 +1,4 @@
-/// <reference path="chatwork.d.ts" />
-
+/// <reference path="references.d.ts" />
 var ChatworkExtension;
 (function (ChatworkExtension) {
     var ExtensionManager = (function () {
@@ -7,15 +6,21 @@ var ChatworkExtension;
         }
         ExtensionManager.setup = function () {
             var _this = this;
-            // states, extraSettings, InjectUserCustomScripts のデータをとってきてから開始
-            var waitCount = 2;
+            // states, extraSettings, InjectUserCustomScripts, ExternalInjectUserCustomScripts のデータをとってきてから開始
+            var waitCount = 3;
             var next = function () {
                 if (--waitCount == 0) {
                     _this.setup_(_this.syncItems.states || {}, _this.syncItems.extraSettings || {});
                 }
             };
+            chrome.runtime.sendMessage({ method: 'getExternalCustomScripts', arguments: [] }, function (result) {
+                Object.keys(result).forEach(function (x) { return _this.injectUserCustomScripts.push(result[x].body); });
+                next();
+            });
             chrome.runtime.sendMessage({ method: 'readStorage', arguments: ['InjectUserCustomScripts'] }, function (result) {
-                _this.injectUserCustomScripts = result;
+                if (result) {
+                    _this.injectUserCustomScripts.push(result);
+                }
                 next();
             });
             chrome.storage.sync.get(['states', 'extraSettings'], function (items) {
@@ -27,61 +32,47 @@ var ChatworkExtension;
             var _this = this;
             // InjectUserCustomScriptsだけは特殊扱いで先にevalする
             if (this.injectUserCustomScripts) {
-                try  {
-                    new Function("var ChatworkExtension = window.ChatworkExtension;" + this.injectUserCustomScripts)();
-                } catch (ex) {
+                try {
+                    new Function("var ChatworkExtension = window.ChatworkExtension;" + this.injectUserCustomScripts.join(";\n"))();
+                }
+                catch (ex) {
                     console.log('ChatworkExtension[InjectUserCustomScripts]: Exception');
                     console.log(ex.message);
                     console.log(ex.stack);
                 }
             }
-
             // 無効なやつは読み込まない
             this.LoadExtensionTypes = Object.keys(ChatworkExtension.Extensions).map(function (x) {
                 var t = ChatworkExtension.Extensions[x];
                 var enable = (states[x] != undefined) ? states[x] : !t.metadata.disableByDefault;
                 console.log('ChatworkExtension: ' + x + ' (' + (enable ? 'Enabled' : 'Disabled') + ')');
-
                 return enable ? { name: x, ctor: ChatworkExtension.Extensions[x] } : null;
-            }).filter(function (x) {
-                return x != null;
-            });
+            }).filter(function (x) { return x != null; });
             this.extensions = this.LoadExtensionTypes.map(function (ext) {
                 var instance = new ext.ctor();
-
                 if (extraSettings[ext.name]) {
                     instance.extraSettingValue = extraSettings[ext.name];
                 }
-
                 return instance;
             });
-
             // とりあえず初期化
-            this.executeExtensionsEvent(function (x) {
-                return x.initialize();
-            });
-
+            this.executeExtensionsEvent(function (x) { return x.initialize(); });
             // DOMContentLoaded を監視してそれをonReadyにする(この時点ではChatworkが初期化されていない)
             document.addEventListener('DOMContentLoaded', function () {
                 _this.observeNewChatContent();
                 _this.observeNewGroup();
                 _this.observeAvatarIconInsertion();
                 _this.observeToList();
-
-                _this.executeExtensionsEvent(function (x) {
-                    return x.onReady();
-                });
-
+                _this.executeExtensionsEvent(function (x) { return x.onReady(); });
                 // CWオブジェクトはこちら側から見えないのでブリッジで呼び出すためのと
                 // Chatwork(CW)のinit_loadedを監視して、これがtrueになったらChatworkの読み込みが完了したとするため
                 _this.setupCWBridge();
             });
             //new Utility.ValueObserver(() => (<any>window).CW && CW.init_loaded, () => this.executeExtensionsEvent(x => x.onChatworkReady()));
         };
-
         /**
-        * CWオブジェクトを呼び出すためのブリッジのセットアップ
-        */
+         * CWオブジェクトを呼び出すためのブリッジのセットアップ
+         */
         ExtensionManager.setupCWBridge = function () {
             var _this = this;
             // callCW メソッドの結果を受け取るやつ
@@ -91,36 +82,32 @@ var ChatworkExtension;
                     var caller = e.data.caller;
                     var isError = e.data.isError;
                     if (ExtensionManager._callBridgeQueue[caller]) {
-                        try  {
+                        try {
                             ExtensionManager._callBridgeQueue[caller](result, isError);
-                        } catch (e) {
+                        }
+                        catch (e) {
                             window.console && console.log(e.toString());
                         }
                         delete ExtensionManager._callBridgeQueue[caller];
                     }
                 }
             });
-
             // InitializeWatcherを差し込んでメッセージを待つのです
             chrome.runtime.connect();
             window.addEventListener('message', function (e) {
                 if (e.data.sender == 'ChatworkExtension.Bridge.InitializeWatcher' && e.data.command == 'Ready') {
-                    _this.executeExtensionsEvent(function (x) {
-                        return x.onChatworkReady();
-                    });
+                    _this.executeExtensionsEvent(function (x) { return x.onChatworkReady(); });
                 }
             });
-
             // ブリッジを差し込むのです
             var scriptE = document.createElement('script');
             scriptE.type = 'text/javascript';
             scriptE.src = chrome.extension.getURL('chatworkextension.bridge.js');
             window.document.body.appendChild(scriptE);
         };
-
         /**
-        * ブリッジを通してCWオブジェクトのメソッドを呼び出します
-        */
+         * ブリッジを通してCWオブジェクトのメソッドを呼び出します
+         */
         ExtensionManager.callCW = function (method, args, callback) {
             var caller = new Date().valueOf() + '-' + (Math.random() * 10000) + callback.toString();
             ExtensionManager._callBridgeQueue[caller] = callback;
@@ -132,18 +119,17 @@ var ChatworkExtension;
                 caller: caller
             }, '*');
         };
-
         ExtensionManager.executeExtensionsEvent = function (func) {
             this.extensions.forEach(function (x) {
-                try  {
+                try {
                     func(x);
-                } catch (e) {
+                }
+                catch (e) {
                     window.console && console.log(e.toString());
                     window.console && console.log(e.stack);
                 }
             });
         };
-
         // Rxにしようかと思いつつデカい気がする
         ExtensionManager.observeNewChatContent = function () {
             var _this = this;
@@ -151,9 +137,7 @@ var ChatworkExtension;
             this.observeAddElement(document.getElementById('_chatContent'), function (addedNode) {
                 if (addedNode.classList && addedNode.classList.contains('chatTimeLineMessage')) {
                     var beforeHeight = addedNode.offsetHeight;
-                    _this.executeExtensionsEvent(function (x) {
-                        return x.onChatMessageReceived(addedNode);
-                    });
+                    _this.executeExtensionsEvent(function (x) { return x.onChatMessageReceived(addedNode); });
                     var offset = addedNode.offsetHeight - beforeHeight;
                     if (offset > 0)
                         timelineE.scrollTop += offset;
@@ -164,27 +148,21 @@ var ChatworkExtension;
             var _this = this;
             this.observeAddElement(document.getElementById('_roomListArea'), function (addedNode) {
                 if (addedNode.getAttribute('role') == 'listitem') {
-                    _this.executeExtensionsEvent(function (x) {
-                        return x.onGroupAppear(addedNode);
-                    });
+                    _this.executeExtensionsEvent(function (x) { return x.onGroupAppear(addedNode); });
                 }
             });
         };
         ExtensionManager.observeAvatarIconInsertion = function () {
             var _this = this;
             var applyStyles = function (nodes) {
-                _this.executeExtensionsEvent(function (x) {
-                    return x.onAvatarsAppear(nodes);
-                });
+                _this.executeExtensionsEvent(function (x) { return x.onAvatarsAppear(nodes); });
             };
             this.observeAddElement(document.body, function (addedNode) {
                 if (!addedNode.querySelectorAll)
                     return;
-
                 if (addedNode.classList && addedNode.classList.contains('_avatar')) {
                     applyStyles([addedNode]);
                 }
-
                 applyStyles(Array.apply(null, addedNode.querySelectorAll('._avatar')));
             });
         };
@@ -192,13 +170,10 @@ var ChatworkExtension;
             var _this = this;
             this.observeAddElement(document.getElementById('_toList'), function (addedNode) {
                 if (addedNode.getAttribute('role') == 'listitem') {
-                    _this.executeExtensionsEvent(function (x) {
-                        return x.onToListItemAdded(addedNode);
-                    });
+                    _this.executeExtensionsEvent(function (x) { return x.onToListItemAdded(addedNode); });
                 }
             });
         };
-
         ExtensionManager.observeAddElement = function (targetElement, onMutated) {
             var lockMutationEvent = false;
             var observer = new WebKitMutationObserver(function (mutations) {
@@ -207,9 +182,10 @@ var ChatworkExtension;
                 lockMutationEvent = true;
                 mutations.forEach(function (mutation) {
                     for (var i = 0; i < mutation.addedNodes.length; i++) {
-                        try  {
+                        try {
                             onMutated(mutation.addedNodes[i]);
-                        } catch (e) {
+                        }
+                        catch (e) {
                             window.console && console.log(e);
                             window.console && console.log(e.stack);
                         }
@@ -221,13 +197,11 @@ var ChatworkExtension;
         };
         ExtensionManager.LoadExtensionTypes = [];
         ExtensionManager.extensions = [];
-
         ExtensionManager._callBridgeQueue = {};
-        ExtensionManager.injectUserCustomScripts = null;
+        ExtensionManager.injectUserCustomScripts = [];
         return ExtensionManager;
     })();
     ChatworkExtension.ExtensionManager = ExtensionManager;
-
     var ExtensionBase = (function () {
         function ExtensionBase() {
         }
@@ -248,7 +222,6 @@ var ChatworkExtension;
         return ExtensionBase;
     })();
     ChatworkExtension.ExtensionBase = ExtensionBase;
-
     (function (ExtraSettingType) {
         ExtraSettingType[ExtraSettingType["None"] = 0] = "None";
         ExtraSettingType[ExtraSettingType["TextArea"] = 1] = "TextArea";
@@ -256,9 +229,9 @@ var ChatworkExtension;
     })(ChatworkExtension.ExtraSettingType || (ChatworkExtension.ExtraSettingType = {}));
     var ExtraSettingType = ChatworkExtension.ExtraSettingType;
 })(ChatworkExtension || (ChatworkExtension = {}));
-
 var ChatworkExtension;
 (function (ChatworkExtension) {
+    var Utility;
     (function (Utility) {
         var ValueObserver = (function () {
             function ValueObserver(onCheck, onComplete) {
@@ -267,9 +240,10 @@ var ChatworkExtension;
                 this._onComplete = onComplete;
                 this._timer = setInterval(function () {
                     if (_this._onCheck()) {
-                        try  {
+                        try {
                             _this._onComplete();
-                        } catch (e) {
+                        }
+                        catch (e) {
                         }
                         _this.dispose();
                     }
@@ -284,6 +258,5 @@ var ChatworkExtension;
             return ValueObserver;
         })();
         Utility.ValueObserver = ValueObserver;
-    })(ChatworkExtension.Utility || (ChatworkExtension.Utility = {}));
-    var Utility = ChatworkExtension.Utility;
+    })(Utility = ChatworkExtension.Utility || (ChatworkExtension.Utility = {}));
 })(ChatworkExtension || (ChatworkExtension = {}));
