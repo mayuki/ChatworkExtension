@@ -1,7 +1,7 @@
 ﻿{
     "manifest_version": 2,
     "name": "ChatWork Extension",
-    "version": "0.37564.9",
+    "version": "0.37564.10",
     "description": "ChatWorkの痛みを緩和します。",
     "homepage_url": "https://github.com/mayuki/ChatworkExtension",
     "author": "Mayuki Sawatari",
@@ -22,7 +22,14 @@
     "web_accessible_resources": [ "style.css", "extensions/*.css", "chatworkextension.bridge.js", "chatworkextension.customscripts.js", "dicts/*.txt", "migemojs/migemo.js", "highlightjs/styles/*.css" ],
     "options_page": "settings.html",
     "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
-    "permissions": [ "storage" ],
+    "permissions": [
+      "storage",
+      "webRequest",
+      "webRequestBlocking",
+      "*://*.s3-ap-northeast-1.amazonaws.com/",
+      "*://kcw.kddi.ne.jp/",
+      "*://www.chatwork.com/"
+    ],
     "background": {
         "scripts": [ "chatworkextension.background.js" ]
     },

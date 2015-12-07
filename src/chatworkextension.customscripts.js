@@ -1,20 +1,16 @@
-﻿
 // 常にグループ一覧を名前でソートするモード
 $(function () {
     if (!document.body.classList.contains('__x-GroupListAlwaysSortedByName-enabled'))
         return;
-
     var _getSortedRoomList = RL.getSortedRoomList;
     RL.getSortedRoomList = function () {
         return _getSortedRoomList.apply(this, ["name"]);
     };
 });
-
 // ToリストをMigemo化するやつ
 $(function () {
     if (!document.body.classList.contains('__x-MigemizeToList-enabled'))
         return;
-
     var widget = $('#_toList').data('cwui-cwListTip');
     widget.getList = function () {
         var a = typeof this.option.list == "function" ? this.option.list.apply(this) : this.option.list, b = [], f = "";
@@ -48,30 +44,29 @@ $(function () {
         return b;
     };
 });
-
 // プレビューダイアログをカスタムする
 $(function () {
     CW.view.preparePreviewLinkDialog(); // Widgetがじゅんびされてないくさい
-
     var widget = $("#_previewLinkDialog").data('cwui-cwDialog');
     var origOpen = widget.option.open;
     widget.option.open = function (type, url) {
         if (type == 'x-image') {
             widget.data.url = url;
             openCustom_Image.apply(widget, arguments);
-        } else {
+        }
+        else {
             // オリジナルを呼ぶ
             origOpen.apply(widget, arguments);
         }
     };
-
     function openCustom_Image(type, url, e, f) {
         var i = {
             title: url
         };
         var that = this;
         var content = $("#_previewLinkContent");
-        content.html('<div class="filePreviewDialogArea"><div id="_filePreviewLoading-x-custom" class="contentLoading"><img src="./imagenew/all/common/loader/img_loader_gray.gif" />' + L.file_loading + '</div><div class="filePreviewImage"><img id="_filePreviewImage-x-custom" style="visibility:hidden" src="' + url + '"/><div class="filePreviewBlank"><span class="icoFontLinkBlank"></span><span class="icoTextHide">' + L.file_preview_open_newwindow + "<span></div></div></div>");
+        content.html('<div class="filePreviewDialogArea"><div id="_filePreviewLoading-x-custom" class="contentLoading"><img src="./imagenew/all/common/loader/img_loader_gray.gif" />' +
+            L.file_loading + '</div><div class="filePreviewImage"><img id="_filePreviewImage-x-custom" style="visibility:hidden" src="' + url + '"/><div class="filePreviewBlank"><span class="icoFontLinkBlank"></span><span class="icoTextHide">' + L.file_preview_open_newwindow + "<span></div></div></div>");
         var d = $("#_filePreviewImage-x-custom");
         d.load(function () {
             $("#_filePreviewLoading-x-custom").hide();
@@ -83,7 +78,6 @@ $(function () {
                 maxWidth: '100%',
                 maxHeight: '100%'
             };
-
             //if (i) a.width = Math.round(f), a.height = Math.round(e);
             d.css(a);
             d.click(function () {
@@ -91,12 +85,9 @@ $(function () {
             });
             content.find('.filePreviewDialogArea').css({ width: '100%', height: '100%' });
         });
-
         (function () {
             var e = $C("document"), d = e.width(), e = e.height(), k, l;
-
             var g = TM.dialog_header_height + TM.dialog_footer_height;
-
             this.$el.removeClass("previewFullDialog");
             g += TM.preview_dialog_height_padding;
             k = 1120;
@@ -108,12 +99,10 @@ $(function () {
         }).apply(this);
     }
 });
-
 // プレビューダイアログの背景をクリックしたら閉じるやつ
 $(function () {
     if (!document.body.classList.contains('__x-ClosePreviewDialogOnBackgroundClicked-enabled'))
         return;
-
     $(document).on('click', '._cwDGBase:visible', function (e) {
         $(e.target).find('.dialog').data('cwui-cwDialog').close();
     });

@@ -205,20 +205,13 @@ var ChatworkExtension;
     var ExtensionBase = (function () {
         function ExtensionBase() {
         }
-        ExtensionBase.prototype.initialize = function () {
-        };
-        ExtensionBase.prototype.onReady = function () {
-        };
-        ExtensionBase.prototype.onChatworkReady = function () {
-        };
-        ExtensionBase.prototype.onChatMessageReceived = function (element) {
-        };
-        ExtensionBase.prototype.onGroupAppear = function (element) {
-        };
-        ExtensionBase.prototype.onAvatarsAppear = function (elements) {
-        };
-        ExtensionBase.prototype.onToListItemAdded = function (element) {
-        };
+        ExtensionBase.prototype.initialize = function () { };
+        ExtensionBase.prototype.onReady = function () { };
+        ExtensionBase.prototype.onChatworkReady = function () { };
+        ExtensionBase.prototype.onChatMessageReceived = function (element) { };
+        ExtensionBase.prototype.onGroupAppear = function (element) { };
+        ExtensionBase.prototype.onAvatarsAppear = function (elements) { };
+        ExtensionBase.prototype.onToListItemAdded = function (element) { };
         return ExtensionBase;
     })();
     ChatworkExtension.ExtensionBase = ExtensionBase;
@@ -243,8 +236,7 @@ var ChatworkExtension;
                         try {
                             _this._onComplete();
                         }
-                        catch (e) {
-                        }
+                        catch (e) { }
                         _this.dispose();
                     }
                 }, 100);

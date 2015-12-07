@@ -80,8 +80,7 @@ var ChatworkExtension;
                     }
                     chrome.storage.sync.set({
                         extraSettings: _this.extraSettings
-                    }, function () {
-                    });
+                    }, function () { });
                 };
                 this.onValueChanged = function (key, newValue) {
                     if (typeof (newValue) == 'string' && newValue != '') {
@@ -92,8 +91,7 @@ var ChatworkExtension;
                     }
                     chrome.storage.sync.set({
                         states: _this.states
-                    }, function () {
-                    });
+                    }, function () { });
                 };
                 this.states = states;
                 this.extraSettings = extraSettings;

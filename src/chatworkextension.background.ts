@@ -23,6 +23,21 @@ module ChatworkExtension {
             });
         }
 
+        static externalCustomScript: IExternalCustomScriptStorage = {};
+        static getExternalCustomScripts(): IExternalCustomScriptStorage {
+            return Background.externalCustomScript;
+        }
+        static registerExternalCustomScript(extensionId: string, body: string): void {
+            console.log('Register ExternalCustomScript: ' + extensionId);
+            Background.externalCustomScript[extensionId] = { body: body };
+        }
+        static unregisterExternalCustomScript(extensionId: string): void {
+            console.log('Unregister ExternalCustomScript: ' + extensionId);
+            delete Background.externalCustomScript[extensionId];
+        }
+
+        // -- ここから下は外側からメッセージ経由で呼び出されるやつ
+
         static readStorage(key: string): string {
             return localStorage[key];
         }
@@ -35,17 +50,19 @@ module ChatworkExtension {
             }
         }
 
-        static externalCustomScript: IExternalCustomScriptStorage = {};
-        static getExternalCustomScripts(): IExternalCustomScriptStorage {
-            return Background.externalCustomScript;
-        }
-        static registerExternalCustomScript(extensionId: string, body: string): void {
-            console.log('Register ExternalCustomScript: ' + extensionId);
-            Background.externalCustomScript[extensionId] = { body: body };
-        }
-        static unregisterExternalCustomScript(extensionId: string): void {
-            console.log('Unregister ExternalCustomScript: ' + extensionId);
-            delete Background.externalCustomScript[extensionId];
+
+        // レスポンスヘッダーを書き換えるマン
+        static startTextResponseHeaderCharsetFilter(): void {
+            chrome.webRequest.onHeadersReceived.addListener((filter) => {
+                var responseHeaders = filter.responseHeaders.map(x => (x.name == "Content-Type" && x.value.match(/text\/plain/)) ? { name: "Content-Type", value: "text/plain; charset=shift_jis" } : x);
+                console.log(filter);
+                console.log(responseHeaders);
+                return { responseHeaders: responseHeaders };
+            }, {
+                urls: ["*://*.s3-ap-northeast-1.amazonaws.com/*"],
+                types: ["xmlhttprequest"]
+            }, ["responseHeaders", "blocking"]
+);
         }
     }
 }

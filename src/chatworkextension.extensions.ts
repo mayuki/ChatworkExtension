@@ -219,7 +219,7 @@ module ChatworkExtension.Extensions {
             // ```...```
             var pres = element.querySelectorAll('pre');
             [].forEach.call(pres, (elem: HTMLPreElement) => {
-                if (elem.innerHTML.indexOf('```') == -1 && !elem.innerHTML.match(/^C#/m)) {
+                if (elem.innerHTML.indexOf('```') == -1) {
                     return;
                 }
                 elem.innerHTML = (<any>elem.innerHTML).replace(/^```([^\n]*)([\s\S]*?)^```|^C#\s+([\s\S]*)/mg, (match, type, code, code2) => {
@@ -307,6 +307,20 @@ module ChatworkExtension.Extensions {
                     element.classList.add('chatTimeLineMessageMention');
                 }
             }
+        }
+    }
+
+    /**
+     * テキストのレスポンスヘッダーを強制的にShift_JISにする
+     */
+    export class RewriteTextResponseContentTypeCharsetShiftJis extends ChatworkExtension.ExtensionBase {
+        static metadata = {
+            description: "テキストのレスポンスヘッダーを強制的にShift_JISにする機能を提供します。",
+            disableByDefault: true
+        }
+
+        onReady(): void {
+            chrome.runtime.sendMessage({ method: 'startTextResponseHeaderCharsetFilter', arguments: [] }, (result: string) => { });
         }
     }
 }
