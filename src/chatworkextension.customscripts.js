@@ -13,12 +13,17 @@ $(function () {
         return;
     var widget = $('#_toList').data('cwui-cwListTip');
     widget.getList = function () {
-        var a = typeof this.option.list == "function" ? this.option.list.apply(this) : this.option.list, b = [], f = "";
-        this.searchbox && (f = this.searchbox.getVal());
-        var re = new RegExp(MigemoJS.getRegExp(f), "i");
-        for (var g = a.length, l = 0; l < g; l++) {
-            var k = "", j = a[l], k = j.matchKey != void 0 ? j.matchKey : j.key != void 0 ? j.key : j.label;
-            (f.length == 0 || re.test(k)) && b.push(j);
+        var a = typeof this.option.list == "function" ? this.option.list.apply(this) : this.option.list, b = [], f = [];
+        this.searchbox && (f = this.searchbox.getVal().toLowerCase().replace(/^\s+|\s+$/g, "").split(/\s+/));
+        var re = new RegExp(MigemoJS.getRegExp(f.join(' ')), "i");
+        for (var i = a.length, h = 0; h < i; h++) {
+            var j = "", k = a[h], j = k.keys != void 0 ? k.keys.join(" ") : k.label, j = j.toLowerCase();
+            (function () {
+                for (var a = 0; a < f.length; a++)
+                    if (j.indexOf(f[a]) === -1 && !re.test(j))
+                        return;
+                b.push(k);
+            })();
         }
         return b;
     };
@@ -30,14 +35,15 @@ $(function () {
         for (var e = 0; e < d; e++) {
             var f = a[e];
             if (f != AC.myid) {
-                if (CW.is_business && ST.data.private_nickname && !RM.isInternal())
-                    var h = AC.getDefaultNickName(f), g = AC.getName(f);
-                else
-                    h = AC.getNickName(f), g = AC.getNickName(f, !0), g === "" && (g = AC.getName(f));
-                this.data.aid2name[f] = h;
+                var g = CW.is_business && ST.data.private_nickname && !RM.isInternal() ? AC.getDefaultNickName(f) : AC.getNickName(f);
+                this.data.aid2name[f] = g;
                 b.push({
-                    key: g, value: f, label: CW.getAvatarPanel(f, { clicktip: !1, size: "small" }) + '<p class="autotrim">' + escape_html(h) + "</p>",
-                    matchKey: g + AC.getTwitter(f) + AC.getEmail(f) + AC.getOrgName(f)
+                    keys: AC.getSearchKeys(f).concat([AC.getTwitter(f)]),
+                    value: f,
+                    label: CW.getAvatarPanel(f, {
+                        clicktip: !1,
+                        size: "small"
+                    }) + '<p class="autotrim">' + escape_html(g) + "</p>"
                 });
             }
         }

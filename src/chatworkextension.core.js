@@ -200,7 +200,7 @@ var ChatworkExtension;
         ExtensionManager._callBridgeQueue = {};
         ExtensionManager.injectUserCustomScripts = [];
         return ExtensionManager;
-    })();
+    }());
     ChatworkExtension.ExtensionManager = ExtensionManager;
     var ExtensionBase = (function () {
         function ExtensionBase() {
@@ -213,7 +213,7 @@ var ChatworkExtension;
         ExtensionBase.prototype.onAvatarsAppear = function (elements) { };
         ExtensionBase.prototype.onToListItemAdded = function (element) { };
         return ExtensionBase;
-    })();
+    }());
     ChatworkExtension.ExtensionBase = ExtensionBase;
     (function (ExtraSettingType) {
         ExtraSettingType[ExtraSettingType["None"] = 0] = "None";
@@ -248,7 +248,7 @@ var ChatworkExtension;
                 }
             };
             return ValueObserver;
-        })();
+        }());
         Utility.ValueObserver = ValueObserver;
     })(Utility = ChatworkExtension.Utility || (ChatworkExtension.Utility = {}));
 })(ChatworkExtension || (ChatworkExtension = {}));

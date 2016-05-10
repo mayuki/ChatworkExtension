@@ -32,7 +32,7 @@ var ChatworkExtension;
                 advanced: true
             };
             return InjectCustomStylesheets;
-        })(ChatworkExtension.ExtensionBase);
+        }(ChatworkExtension.ExtensionBase));
         Extensions.InjectCustomStylesheets = InjectCustomStylesheets;
         /**
          * ユーザーカスタムスクリプトを差し込む
@@ -51,7 +51,7 @@ var ChatworkExtension;
                 extraSettingLocalOnly: true
             };
             return InjectUserCustomScripts;
-        })(ChatworkExtension.ExtensionBase);
+        }(ChatworkExtension.ExtensionBase));
         Extensions.InjectUserCustomScripts = InjectUserCustomScripts;
         /**
          * ユーザーCSSを差し込む
@@ -77,7 +77,7 @@ var ChatworkExtension;
                 extraSettingLocalOnly: true
             };
             return InjectUserCustomStylesheets;
-        })(ChatworkExtension.ExtensionBase);
+        }(ChatworkExtension.ExtensionBase));
         Extensions.InjectUserCustomStylesheets = InjectUserCustomStylesheets;
         /**
          * Webページコンテキストで動くカスタムスクリプトを差し込む
@@ -105,7 +105,7 @@ var ChatworkExtension;
                 hidden: true
             };
             return InjectWebPageContextCustomScripts;
-        })(ChatworkExtension.ExtensionBase);
+        }(ChatworkExtension.ExtensionBase));
         Extensions.InjectWebPageContextCustomScripts = InjectWebPageContextCustomScripts;
         /**
          * グループリストの高さを縮める
@@ -123,7 +123,7 @@ var ChatworkExtension;
                 disableByDefault: true
             };
             return GroupListAlwaysSortedByName;
-        })(ChatworkExtension.ExtensionBase);
+        }(ChatworkExtension.ExtensionBase));
         Extensions.GroupListAlwaysSortedByName = GroupListAlwaysSortedByName;
         /**
          * グループリストの高さを縮める
@@ -140,7 +140,7 @@ var ChatworkExtension;
                 description: "グループリストの高さを縮める変更を提供します。"
             };
             return ResizeGroupListHeight;
-        })(ChatworkExtension.ExtensionBase);
+        }(ChatworkExtension.ExtensionBase));
         Extensions.ResizeGroupListHeight = ResizeGroupListHeight;
         /**
          * グループのインクリメンタルな絞り込み
@@ -198,7 +198,7 @@ var ChatworkExtension;
                 description: "グループのインクリメンタルな絞り込み機能を提供します。"
             };
             return IncrementalGroupFilter;
-        })(ChatworkExtension.ExtensionBase);
+        }(ChatworkExtension.ExtensionBase));
         Extensions.IncrementalGroupFilter = IncrementalGroupFilter;
         /**
          * ピンしているやつにクラスを付ける
@@ -221,7 +221,7 @@ var ChatworkExtension;
                 hidden: true
             };
             return AddPinnedGroups;
-        })(ChatworkExtension.ExtensionBase);
+        }(ChatworkExtension.ExtensionBase));
         Extensions.AddPinnedGroups = AddPinnedGroups;
         /**
          * シンタックスハイライトするよ
@@ -274,7 +274,7 @@ var ChatworkExtension;
                 description: "コードのシンタックスハイライトを提供します。"
             };
             return SyntaxHighlighter;
-        })(ChatworkExtension.ExtensionBase);
+        }(ChatworkExtension.ExtensionBase));
         Extensions.SyntaxHighlighter = SyntaxHighlighter;
         /**
          * フラットスタイル
@@ -291,7 +291,7 @@ var ChatworkExtension;
                 description: "フラットスタイルを提供します。"
             };
             return FlatStyle;
-        })(ChatworkExtension.ExtensionBase);
+        }(ChatworkExtension.ExtensionBase));
         Extensions.FlatStyle = FlatStyle;
         /**
          * Toリストの検索を拡張(Migemo)
@@ -308,7 +308,7 @@ var ChatworkExtension;
                 description: "Toリストの検索を拡張する機能を提供します。"
             };
             return MigemizeToList;
-        })(ChatworkExtension.ExtensionBase);
+        }(ChatworkExtension.ExtensionBase));
         Extensions.MigemizeToList = MigemizeToList;
         /**
          * プレビューダイアログをクリックシールド部分をクリックしても閉じる
@@ -325,7 +325,7 @@ var ChatworkExtension;
                 description: "プレビューダイアログの背景部分をクリックしても閉じる機能を提供します。"
             };
             return ClosePreviewDialogOnBackgroundClicked;
-        })(ChatworkExtension.ExtensionBase);
+        }(ChatworkExtension.ExtensionBase));
         Extensions.ClosePreviewDialogOnBackgroundClicked = ClosePreviewDialogOnBackgroundClicked;
         /**
          * キーワード反応
@@ -354,7 +354,7 @@ var ChatworkExtension;
                 extraSettingType: ChatworkExtension.ExtraSettingType.TextArea
             };
             return KeywordHighlight;
-        })(ChatworkExtension.ExtensionBase);
+        }(ChatworkExtension.ExtensionBase));
         Extensions.KeywordHighlight = KeywordHighlight;
         /**
          * テキストのレスポンスヘッダーを強制的にShift_JISにする
@@ -372,7 +372,7 @@ var ChatworkExtension;
                 disableByDefault: true
             };
             return RewriteTextResponseContentTypeCharsetShiftJis;
-        })(ChatworkExtension.ExtensionBase);
+        }(ChatworkExtension.ExtensionBase));
         Extensions.RewriteTextResponseContentTypeCharsetShiftJis = RewriteTextResponseContentTypeCharsetShiftJis;
     })(Extensions = ChatworkExtension.Extensions || (ChatworkExtension.Extensions = {}));
 })(ChatworkExtension || (ChatworkExtension = {}));
