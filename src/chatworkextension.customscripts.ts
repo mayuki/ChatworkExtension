@@ -13,6 +13,38 @@ declare var ST: any;
 declare var L: any;
 declare var escape_html: any;
 
+// チャットテキスト入力エリアでメンバー名の補完を提供
+$(() => {
+    "use strict";
+    if (!document.body.classList.contains('__x-MemberCompletionInTextArea-enabled')) return;
+
+    // JSが読み込まれるのを雑に待つ
+    setTimeout(() => {
+        $('#_chatText').textcomplete([
+            {
+                match: /\B@(\w*)$/,
+                search: (term, callback) => {
+                    const memberIds = RM.getSortedMemberList().filter(x => x !== AC.myid.toString());
+                    const re = new RegExp(MigemoJS.getRegExp(term), "i");
+                    callback(memberIds.map((memberId) => {
+                        const searchKeys = AC.getSearchKeys(memberId).concat([AC.getTwitter(memberId)]).join(' ');
+                        return re.test(searchKeys) ? memberId : null;
+                    }).filter(x => x !== null));
+                },
+                template: (memberId) => {
+                    const displayName = CW.is_business && ST.data.private_nickname && !RM.isInternal() ? AC.getDefaultNickName(memberId) : AC.getNickName(memberId);
+                    return CW.getAvatarPanel(memberId, { clicktip: true, size: "small" }) + ' <span class="autotrim">' + escape_html(displayName) + "</span>";
+                },
+                index: 1,
+                replace: (memberId) => {
+                    const displayName = CW.is_business && ST.data.private_nickname && !RM.isInternal() ? AC.getDefaultNickName(memberId) : AC.getNickName(memberId);
+                    return '[To:' + memberId + '] ' + displayName + "\n";
+                }
+            }
+            ], { appendTo: '.chatSendAreaContent' });
+    }, 1000);
+});
+
 // 常にグループ一覧を名前でソートするモード
 $(() => {
     if (!document.body.classList.contains('__x-GroupListAlwaysSortedByName-enabled')) return;

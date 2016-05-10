@@ -100,6 +100,12 @@ var ChatworkExtension;
                 scriptE.src = chrome.extension.getURL('migemojs/migemo.js');
                 scriptE.id = 'script-migemojs';
                 window.document.body.appendChild(scriptE);
+                // jquery-textcomplete
+                var scriptE2 = document.createElement('script');
+                scriptE2.type = 'text/javascript';
+                scriptE2.src = chrome.extension.getURL('jquery-textcomplete/jquery.textcomplete.min.js');
+                scriptE2.id = 'script-jquery-textcomplete';
+                window.document.body.appendChild(scriptE2);
             };
             InjectWebPageContextCustomScripts.metadata = {
                 hidden: true
@@ -142,6 +148,23 @@ var ChatworkExtension;
             return ResizeGroupListHeight;
         }(ChatworkExtension.ExtensionBase));
         Extensions.ResizeGroupListHeight = ResizeGroupListHeight;
+        /**
+         * チャットテキスト入力エリアでメンバー名の補完を提供
+         */
+        var MemberCompletionInTextArea = (function (_super) {
+            __extends(MemberCompletionInTextArea, _super);
+            function MemberCompletionInTextArea() {
+                _super.apply(this, arguments);
+            }
+            MemberCompletionInTextArea.prototype.onReady = function () {
+                document.body.classList.add('__x-MemberCompletionInTextArea-enabled');
+            };
+            MemberCompletionInTextArea.metadata = {
+                description: "チャットテキスト入力エリアでメンバー名の補完を提供します。"
+            };
+            return MemberCompletionInTextArea;
+        }(ChatworkExtension.ExtensionBase));
+        Extensions.MemberCompletionInTextArea = MemberCompletionInTextArea;
         /**
          * グループのインクリメンタルな絞り込み
          */

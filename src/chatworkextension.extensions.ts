@@ -82,6 +82,13 @@ module ChatworkExtension.Extensions {
             scriptE.src = chrome.extension.getURL('migemojs/migemo.js');
             scriptE.id = 'script-migemojs';
             window.document.body.appendChild(scriptE);
+
+            // jquery-textcomplete
+            var scriptE2 = document.createElement('script');
+            scriptE2.type = 'text/javascript';
+            scriptE2.src = chrome.extension.getURL('jquery-textcomplete/jquery.textcomplete.min.js');
+            scriptE2.id = 'script-jquery-textcomplete';
+            window.document.body.appendChild(scriptE2);
         }
     }
 
@@ -109,6 +116,19 @@ module ChatworkExtension.Extensions {
 
         onReady(): void {
             document.body.classList.add('__x-ResizeGroupListHeight-enabled');
+        }
+    }
+
+    /**
+     * チャットテキスト入力エリアでメンバー名の補完を提供
+     */
+    export class MemberCompletionInTextArea extends ChatworkExtension.ExtensionBase {
+        static metadata = {
+            description: "チャットテキスト入力エリアでメンバー名の補完を提供します。"
+        }
+
+        onReady(): void {
+            document.body.classList.add('__x-MemberCompletionInTextArea-enabled');
         }
     }
 

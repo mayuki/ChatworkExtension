@@ -1,3 +1,34 @@
+// チャットテキスト入力エリアでメンバー名の補完を提供
+$(function () {
+    "use strict";
+    if (!document.body.classList.contains('__x-MemberCompletionInTextArea-enabled'))
+        return;
+    // JSが読み込まれるのを雑に待つ
+    setTimeout(function () {
+        $('#_chatText').textcomplete([
+            {
+                match: /\B@(\w*)$/,
+                search: function (term, callback) {
+                    var memberIds = RM.getSortedMemberList().filter(function (x) { return x !== AC.myid.toString(); });
+                    var re = new RegExp(MigemoJS.getRegExp(term), "i");
+                    callback(memberIds.map(function (memberId) {
+                        var searchKeys = AC.getSearchKeys(memberId).concat([AC.getTwitter(memberId)]).join(' ');
+                        return re.test(searchKeys) ? memberId : null;
+                    }).filter(function (x) { return x !== null; }));
+                },
+                template: function (memberId) {
+                    var displayName = CW.is_business && ST.data.private_nickname && !RM.isInternal() ? AC.getDefaultNickName(memberId) : AC.getNickName(memberId);
+                    return CW.getAvatarPanel(memberId, { clicktip: true, size: "small" }) + ' <span class="autotrim">' + escape_html(displayName) + "</span>";
+                },
+                index: 1,
+                replace: function (memberId) {
+                    var displayName = CW.is_business && ST.data.private_nickname && !RM.isInternal() ? AC.getDefaultNickName(memberId) : AC.getNickName(memberId);
+                    return '[To:' + memberId + '] ' + displayName + "\n";
+                }
+            }
+        ], { appendTo: '.chatSendAreaContent' });
+    }, 1000);
+});
 // 常にグループ一覧を名前でソートするモード
 $(function () {
     if (!document.body.classList.contains('__x-GroupListAlwaysSortedByName-enabled'))
