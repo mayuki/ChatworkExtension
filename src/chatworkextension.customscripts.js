@@ -1,3 +1,4 @@
+var _this = this;
 // チャットテキスト入力エリアでメンバー名の補完を提供
 $(function () {
     "use strict";
@@ -5,6 +6,19 @@ $(function () {
         return;
     // JSが読み込まれるのを雑に待つ
     setTimeout(function () {
+        // ESC対応とIME対応のアダプター
+        function CustomTextareaAdapter(element, completer, option) {
+            var _this = this;
+            element.addEventListener('compositionend', function () { return _this.completer.trigger(_this.getTextFromHeadToCaret(), true); });
+            this.initialize(element, completer, option);
+        }
+        $.extend(CustomTextareaAdapter.prototype, $.fn.textcomplete['Textarea'].prototype, {
+            _skipSearch: function (clickEvent) {
+                if (clickEvent.keyCode === 27)
+                    return true;
+                $.fn.textcomplete['Textarea'].prototype._skipSearch.apply(_this, [clickEvent]);
+            }
+        });
         $('#_chatText').textcomplete([
             {
                 match: /\B@(\w*)$/,
@@ -26,7 +40,7 @@ $(function () {
                     return '[To:' + memberId + '] ' + displayName + "\n";
                 }
             }
-        ], { appendTo: '.chatSendAreaContent' });
+        ], { adapter: CustomTextareaAdapter, appendTo: '.chatSendAreaContent' });
     }, 1000);
 });
 // 常にグループ一覧を名前でソートするモード

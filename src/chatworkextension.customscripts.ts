@@ -20,6 +20,17 @@ $(() => {
 
     // JSが読み込まれるのを雑に待つ
     setTimeout(() => {
+        // ESC対応とIME対応のアダプター
+        function CustomTextareaAdapter(element, completer, option) {
+            element.addEventListener('compositionend', () => this.completer.trigger(this.getTextFromHeadToCaret(), true));
+            this.initialize(element, completer, option);
+        }
+        $.extend(CustomTextareaAdapter.prototype, $.fn.textcomplete['Textarea'].prototype, {
+            _skipSearch: (clickEvent) => {
+                if (clickEvent.keyCode === 27) return true;
+                $.fn.textcomplete['Textarea'].prototype._skipSearch.apply(this, [clickEvent]);
+            }
+        });
         $('#_chatText').textcomplete([
             {
                 match: /\B@(\w*)$/,
@@ -41,7 +52,7 @@ $(() => {
                     return '[To:' + memberId + '] ' + displayName + "\n";
                 }
             }
-            ], { appendTo: '.chatSendAreaContent' });
+        ], { adapter: CustomTextareaAdapter, appendTo: '.chatSendAreaContent' });
     }, 1000);
 });
 
