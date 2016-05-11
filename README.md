@@ -13,6 +13,7 @@
   - コードのシンタックスハイライト(```で囲むやつ)
   - キーワード機能を提供します
   - プレビューダイアログの背景をクリックしたら閉じる
+  - ユーザーへの TO を @名前 で追加
 - プレビュー内のテキストの文字エンコーディングを強制的にShift_JISに変更
 
 How to install
@@ -45,6 +46,7 @@ License
 - ChatworkExtension本体: MIT License
 - migemojs: GPL2 | Migemo.js - Yet another Migemo implementation in JavaScript Copyright 2011 Wakaba <w@suika.fam.cx>
 - Highlight.js: MIT License | Copyright (c) 2006, Ivan Sagalaev All rights reserved.
+- jquery-textcomplete : MIT License | Copyright (c) 2013-2014 Yuku Takahashi
 
 つまるところパッケージ全体ではGPLになります。
 

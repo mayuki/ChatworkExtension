@@ -5,3 +5,18 @@
     display: none;
     overflow: hidden;
 }
+
+/* ユーザー名補完のリスト */
+.textcomplete-item {
+    border: none !important;
+}
+.textcomplete-item a {
+    color: #000;
+    font-size: 0.85em;
+}
+.textcomplete-item.active a {
+    color: #fff;
+}
+.textcomplete-item ._avatar {
+    border-radius: 16px;
+}
