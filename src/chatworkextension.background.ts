@@ -4,7 +4,8 @@ module ChatworkExtension {
     export class Background {
         static start(): void {
             chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-                (sendResponse || function() {})(this[message.method].apply(this, message.arguments || []));
+                
+                (sendResponse || function() {})((<any>this)[message.method].apply(this, message.arguments || []));
             });
 
             // inter-extension communication
@@ -36,7 +37,7 @@ module ChatworkExtension {
             delete Background.externalCustomScript[extensionId];
         }
 
-        // -- ‚±‚±‚©‚ç‰º‚ÍŠO‘¤‚©‚çƒƒbƒZ[ƒWŒo—R‚ÅŒÄ‚Ño‚³‚ê‚é‚â‚Â
+        // -- ã“ã“ã‹ã‚‰ä¸‹ã¯å¤–å´ã‹ã‚‰ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸çµŒç”±ã§å‘¼ã³å‡ºã•ã‚Œã‚‹ã‚„ã¤
 
         static readStorage(key: string): string {
             return localStorage[key];
@@ -51,7 +52,7 @@ module ChatworkExtension {
         }
 
 
-        // ƒŒƒXƒ|ƒ“ƒXƒwƒbƒ_[‚ð‘‚«Š·‚¦‚éƒ}ƒ“
+        // ãƒ¬ã‚¹ãƒãƒ³ã‚¹ãƒ˜ãƒƒãƒ€ãƒ¼ã‚’æ›¸ãæ›ãˆã‚‹ãƒžãƒ³
         static startTextResponseHeaderCharsetFilter(): void {
             chrome.webRequest.onHeadersReceived.addListener((filter) => {
                 var responseHeaders = filter.responseHeaders.map(x => (x.name == "Content-Type" && x.value.match(/text\/plain/)) ? { name: "Content-Type", value: "text/plain; charset=shift_jis" } : x);

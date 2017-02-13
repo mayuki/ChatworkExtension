@@ -1,4 +1,4 @@
-/// <reference path="_references.d.ts" />
+/// <reference path="references.d.ts" />
 var ChatworkExtension;
 (function (ChatworkExtension) {
     var Bridge;
@@ -13,7 +13,7 @@ var ChatworkExtension;
                 window.postMessage({ sender: "ChatworkExtension.Bridge.InitializeWatcher", command: 'Ready', value: 1 }, "*");
             };
             return InitializeWatcher;
-        })();
+        }());
         Bridge.InitializeWatcher = InitializeWatcher;
         var CWBridge = (function () {
             function CWBridge() {
@@ -35,7 +35,7 @@ var ChatworkExtension;
                 });
             };
             return CWBridge;
-        })();
+        }());
         Bridge.CWBridge = CWBridge;
         var ValueObserver = (function () {
             function ValueObserver(onCheck, onComplete) {
@@ -47,8 +47,7 @@ var ChatworkExtension;
                         try {
                             _this._onComplete();
                         }
-                        catch (e) {
-                        }
+                        catch (e) { }
                         _this.dispose();
                     }
                 }, 100);
@@ -60,7 +59,7 @@ var ChatworkExtension;
                 }
             };
             return ValueObserver;
-        })();
+        }());
     })(Bridge = ChatworkExtension.Bridge || (ChatworkExtension.Bridge = {}));
 })(ChatworkExtension || (ChatworkExtension = {}));
 ChatworkExtension.Bridge.InitializeWatcher.setup();

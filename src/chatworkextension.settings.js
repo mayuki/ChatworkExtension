@@ -44,9 +44,9 @@ var ChatworkExtension;
                     next();
                 });
             };
-            Main.injectUserCustomScripts = [];
             return Main;
-        })();
+        }());
+        Main.injectUserCustomScripts = [];
         Settings.Main = Main;
         var SettingsViewModel = (function () {
             function SettingsViewModel(states, extraSettings) {
@@ -123,7 +123,7 @@ var ChatworkExtension;
                 });
             }
             return SettingsViewModel;
-        })();
+        }());
     })(Settings = ChatworkExtension.Settings || (ChatworkExtension.Settings = {}));
 })(ChatworkExtension || (ChatworkExtension = {}));
 ChatworkExtension.ExtensionManager.setup = function () {

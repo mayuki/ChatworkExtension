@@ -3,7 +3,6 @@
 // Definitions by: Matthew Kimber <https://github.com/matthewkimber>, otiai10 <https://github.com/otiai10>
 // Definitions: https://github.com/borisyankov/DefinitelyTyped
 
-/// <reference path='../webrtc/MediaStream.d.ts'/>
 
 ////////////////////
 // Global object
@@ -1789,7 +1788,7 @@ declare module chrome.tabCapture {
         videoConstraints?: MediaTrackConstraints;
     }
 
-    export function capture(options: CaptureOptions, callback: (stream: LocalMediaStream) => void): void;
+    //export function capture(options: CaptureOptions, callback: (stream: LocalMediaStream) => void): void;
     export function getCapturedTabs(callback: (result: CaptureInfo[]) => void): void;
 }
 

@@ -59,9 +59,9 @@ var ChatworkExtension;
                 types: ["xmlhttprequest"]
             }, ["responseHeaders", "blocking"]);
         };
-        Background.externalCustomScript = {};
         return Background;
-    })();
+    }());
+    Background.externalCustomScript = {};
     ChatworkExtension.Background = Background;
 })(ChatworkExtension || (ChatworkExtension = {}));
 ChatworkExtension.Background.start();

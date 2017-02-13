@@ -1,0 +1,21 @@
+{
+  "name": "chatworkextension",
+  "version": "1.0.0",
+  "description": "",
+  "main": "gulpfile.js",
+  "dependencies": {},
+  "devDependencies": {
+    "autoprefixer": "^6.6.1",
+    "csswring": "^5.1.1",
+    "gulp": "^3.9.1",
+    "gulp-less": "^3.3.0",
+    "gulp-postcss": "^6.2.0",
+    "less": "^2.7.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "node_modules\\.bin\\gulp default"
+  },
+  "author": "",
+  "license": "MIT"
+}

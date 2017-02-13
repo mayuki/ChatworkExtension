@@ -6,9 +6,6 @@
     line-height: 1.25;
 }
 
-#_sideContentTitle {
-    height: 0 !important;
-}
 #_chatFilterMenu {
     height: 74px !important;
 }
@@ -28,10 +25,8 @@
 /* -------------------------------------------------- */
 .__x-ResizeGroupListHeight-enabled {
     .chatListPin {
-        top: 0;
     }
     .chatListPin ._pin {
-        -webkit-transform: scale(0.6);
     }
     .chatListTitleArea {
         float: left;
@@ -49,9 +44,31 @@
         height: 20px;
         min-height: 0;
     }
+    #_roomListItems .roomListItem__iconContainer {
+        width: 16px;
+        height: 16px;
+    }
     #_roomListItems .roomIcon img {
         width: 16px;
         height: 16px;
+    }
+
+    // ルーム名とかバッジとか
+    .roomListItem__roomInfo {
+        width: calc(~'100% - 36px');
+    }
+    .roomListItem__roomName {
+        display: inline;
+    }
+    .roomListBadges {
+        float: right;
+        transform: scale(0.6);
+    }
+    .roomListItem__pinContainer {
+        top: 0;
+    }
+    .roomListItem__pin {
+        transform: scale(0.6);
     }
     
     .chatListMeta {

@@ -13,7 +13,7 @@ module ChatworkExtension.Settings {
         static readySettingsView(): void {
             // InjectUserCustomScriptsとextraSettings, statesを待ってから実行
             var waitCount = 2;
-            var items;
+            var items: any;
             var next = () => {
                 if (--waitCount == 0) {
                     try {
@@ -37,7 +37,7 @@ module ChatworkExtension.Settings {
                 if (result) { this.injectUserCustomScripts.push(result); }
                 next();
             });
-            chrome.storage.sync.get(['extraSettings', 'states'], (_items) => {
+            chrome.storage.sync.get(['extraSettings', 'states'], (_items: any) => {
                 items = _items;
                 next();
             });
@@ -45,9 +45,9 @@ module ChatworkExtension.Settings {
     }
 
     class SettingsViewModel {
-        entries = [];
-        states = {};
-        extraSettings = {};
+        entries: any = [];
+        states: any = {};
+        extraSettings: any = {};
         isAdvancedVisible = ko.observable(false);
 
         constructor(states: any, extraSettings: any) {
@@ -55,7 +55,7 @@ module ChatworkExtension.Settings {
             this.extraSettings = extraSettings;
 
             Object.keys(ChatworkExtension.Extensions).forEach((key) => {
-                var metadata: ChatworkExtension.IExtensionMetadata = ChatworkExtension.Extensions[key].metadata;
+                var metadata: ChatworkExtension.IExtensionMetadata = (<any>ChatworkExtension.Extensions)[key].metadata;
                 if (metadata.hidden) {
                     return;
                 }
@@ -66,14 +66,14 @@ module ChatworkExtension.Settings {
                     chrome.runtime.sendMessage({ method: 'readStorage', arguments: [key] }, (result: string) => {
                         extraSettingValueObservable(result);
                     });
-                    extraSettingValueObservable.subscribe(newValue => this.onExtraSettingLocalValueChanged(key, newValue));
+                    extraSettingValueObservable.subscribe((newValue: any) => this.onExtraSettingLocalValueChanged(key, newValue));
                 } else {
-                    extraSettingValueObservable.subscribe(newValue => this.onExtraSettingValueChanged(key, newValue));
+                    extraSettingValueObservable.subscribe((newValue: any) => this.onExtraSettingValueChanged(key, newValue));
                 }
 
                 var currentState = (states[key] != undefined) ? states[key].toString() : undefined;
                 var currentStateObservable = ko.observable(currentState);
-                currentStateObservable.subscribe(newValue => this.onValueChanged(key, newValue));
+                currentStateObservable.subscribe((newValue: any) => this.onValueChanged(key, newValue));
                 this.entries.push({
                     title: key,
                     metadata: metadata,
@@ -89,10 +89,10 @@ module ChatworkExtension.Settings {
 
         onResetButtonClicked = () => {
             if (confirm('すべて規定値に戻りますがよろしいですか?')) {
-                this.entries.forEach(x => x.value(''));
+                this.entries.forEach((x: any) => x.value(''));
             }
         }
-        onExtraSettingLocalValueChanged = (key, newValue) => {
+        onExtraSettingLocalValueChanged = (key: any, newValue: any) => {
             if (typeof (newValue) == 'string' && newValue != '') {
                 chrome.runtime.sendMessage({ method: 'writeStorage', arguments: [key, newValue] });
             } else {
@@ -100,7 +100,7 @@ module ChatworkExtension.Settings {
             }
         }
 
-        onExtraSettingValueChanged = (key, newValue) => {
+        onExtraSettingValueChanged = (key: any, newValue: any) => {
             if (typeof (newValue) == 'string' && newValue != '') {
                 this.extraSettings[key] = newValue;
             } else {
@@ -111,7 +111,7 @@ module ChatworkExtension.Settings {
             }, () => { });            
         }
 
-        onValueChanged = (key, newValue) => {
+        onValueChanged = (key: any, newValue: any) => {
             if (typeof(newValue) == 'string' && newValue != '') {
                 this.states[key] = JSON.parse(newValue);
             } else {

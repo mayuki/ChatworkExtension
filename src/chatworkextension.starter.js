@@ -1,2 +1,2 @@
-﻿/// <reference path="chatwork.d.ts" />
+/// <reference path="chatwork.d.ts" />
 ChatworkExtension.ExtensionManager.setup();

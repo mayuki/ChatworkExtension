@@ -37,10 +37,10 @@ $(function () {
                 index: 1,
                 replace: function (memberId) {
                     var displayName = CW.is_business && ST.data.private_nickname && !RM.isInternal() ? AC.getDefaultNickName(memberId) : AC.getNickName(memberId);
-                    return '[To:' + memberId + '] ' + displayName + "\n";
+                    return '[To:' + memberId + '] ' + displayName;
                 }
             }
-        ], { adapter: CustomTextareaAdapter, appendTo: '.chatSendAreaContent' });
+        ], { adapter: CustomTextareaAdapter, appendTo: '.chatInput' });
     }, 1000);
 });
 // 常にグループ一覧を名前でソートするモード

@@ -242,7 +242,7 @@ module ChatworkExtension.Extensions {
                 if (elem.innerHTML.indexOf('```') == -1) {
                     return;
                 }
-                elem.innerHTML = (<any>elem.innerHTML).replace(/^```([^\n]*)([\s\S]*?)^```|^C#\s+([\s\S]*)/mg, (match, type, code, code2) => {
+                elem.innerHTML = (<any>elem.innerHTML).replace(/^```([^\n]*)([\s\S]*?)^```|^C#\s+([\s\S]*)/mg, (match: any, type: any, code: any, code2: any) => {
                     var languages: string[];
                     code = code || code2;
                     if (type) {

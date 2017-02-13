@@ -18,7 +18,7 @@ var ChatworkExtension;
         var InjectCustomStylesheets = (function (_super) {
             __extends(InjectCustomStylesheets, _super);
             function InjectCustomStylesheets() {
-                _super.apply(this, arguments);
+                return _super.apply(this, arguments) || this;
             }
             InjectCustomStylesheets.prototype.onReady = function () {
                 var styleE = document.createElement('link');
@@ -27,12 +27,12 @@ var ChatworkExtension;
                 window.document.head.appendChild(styleE);
                 //(<HTMLElement>window.document.querySelector('#_sideContentTitle')).style.height = '0';
             };
-            InjectCustomStylesheets.metadata = {
-                description: "カスタムスタイルシートを提供します。この拡張を無効にした場合、他の拡張に影響が出る場合があります。",
-                advanced: true
-            };
             return InjectCustomStylesheets;
         }(ChatworkExtension.ExtensionBase));
+        InjectCustomStylesheets.metadata = {
+            description: "カスタムスタイルシートを提供します。この拡張を無効にした場合、他の拡張に影響が出る場合があります。",
+            advanced: true
+        };
         Extensions.InjectCustomStylesheets = InjectCustomStylesheets;
         /**
          * ユーザーカスタムスクリプトを差し込む
@@ -40,18 +40,18 @@ var ChatworkExtension;
         var InjectUserCustomScripts = (function (_super) {
             __extends(InjectUserCustomScripts, _super);
             function InjectUserCustomScripts() {
-                _super.apply(this, arguments);
+                return _super.apply(this, arguments) || this;
             }
             InjectUserCustomScripts.prototype.onReady = function () {
             };
-            InjectUserCustomScripts.metadata = {
-                description: "ユーザーカスタムスクリプトを差し込む機能を提供します。",
-                advanced: true,
-                extraSettingType: ChatworkExtension.ExtraSettingType.TextArea,
-                extraSettingLocalOnly: true
-            };
             return InjectUserCustomScripts;
         }(ChatworkExtension.ExtensionBase));
+        InjectUserCustomScripts.metadata = {
+            description: "ユーザーカスタムスクリプトを差し込む機能を提供します。",
+            advanced: true,
+            extraSettingType: ChatworkExtension.ExtraSettingType.TextArea,
+            extraSettingLocalOnly: true
+        };
         Extensions.InjectUserCustomScripts = InjectUserCustomScripts;
         /**
          * ユーザーCSSを差し込む
@@ -59,7 +59,7 @@ var ChatworkExtension;
         var InjectUserCustomStylesheets = (function (_super) {
             __extends(InjectUserCustomStylesheets, _super);
             function InjectUserCustomStylesheets() {
-                _super.apply(this, arguments);
+                return _super.apply(this, arguments) || this;
             }
             InjectUserCustomStylesheets.prototype.onReady = function () {
                 chrome.runtime.sendMessage({ method: 'readStorage', arguments: ['InjectUserCustomStylesheets'] }, function (result) {
@@ -70,14 +70,14 @@ var ChatworkExtension;
                     }
                 });
             };
-            InjectUserCustomStylesheets.metadata = {
-                description: "ユーザーCSSを差し込む機能を提供します。",
-                advanced: true,
-                extraSettingType: ChatworkExtension.ExtraSettingType.TextArea,
-                extraSettingLocalOnly: true
-            };
             return InjectUserCustomStylesheets;
         }(ChatworkExtension.ExtensionBase));
+        InjectUserCustomStylesheets.metadata = {
+            description: "ユーザーCSSを差し込む機能を提供します。",
+            advanced: true,
+            extraSettingType: ChatworkExtension.ExtraSettingType.TextArea,
+            extraSettingLocalOnly: true
+        };
         Extensions.InjectUserCustomStylesheets = InjectUserCustomStylesheets;
         /**
          * Webページコンテキストで動くカスタムスクリプトを差し込む
@@ -85,7 +85,7 @@ var ChatworkExtension;
         var InjectWebPageContextCustomScripts = (function (_super) {
             __extends(InjectWebPageContextCustomScripts, _super);
             function InjectWebPageContextCustomScripts() {
-                _super.apply(this, arguments);
+                return _super.apply(this, arguments) || this;
             }
             InjectWebPageContextCustomScripts.prototype.onReady = function () {
                 ['chatworkextension.customscripts.js'].forEach(function (src) {
@@ -107,11 +107,11 @@ var ChatworkExtension;
                 scriptE2.id = 'script-jquery-textcomplete';
                 window.document.body.appendChild(scriptE2);
             };
-            InjectWebPageContextCustomScripts.metadata = {
-                hidden: true
-            };
             return InjectWebPageContextCustomScripts;
         }(ChatworkExtension.ExtensionBase));
+        InjectWebPageContextCustomScripts.metadata = {
+            hidden: true
+        };
         Extensions.InjectWebPageContextCustomScripts = InjectWebPageContextCustomScripts;
         /**
          * グループリストの高さを縮める
@@ -119,17 +119,17 @@ var ChatworkExtension;
         var GroupListAlwaysSortedByName = (function (_super) {
             __extends(GroupListAlwaysSortedByName, _super);
             function GroupListAlwaysSortedByName() {
-                _super.apply(this, arguments);
+                return _super.apply(this, arguments) || this;
             }
             GroupListAlwaysSortedByName.prototype.onReady = function () {
                 document.body.classList.add('__x-GroupListAlwaysSortedByName-enabled');
             };
-            GroupListAlwaysSortedByName.metadata = {
-                description: "グループリストを常に名前でソートします。",
-                disableByDefault: true
-            };
             return GroupListAlwaysSortedByName;
         }(ChatworkExtension.ExtensionBase));
+        GroupListAlwaysSortedByName.metadata = {
+            description: "グループリストを常に名前でソートします。",
+            disableByDefault: true
+        };
         Extensions.GroupListAlwaysSortedByName = GroupListAlwaysSortedByName;
         /**
          * グループリストの高さを縮める
@@ -137,16 +137,16 @@ var ChatworkExtension;
         var ResizeGroupListHeight = (function (_super) {
             __extends(ResizeGroupListHeight, _super);
             function ResizeGroupListHeight() {
-                _super.apply(this, arguments);
+                return _super.apply(this, arguments) || this;
             }
             ResizeGroupListHeight.prototype.onReady = function () {
                 document.body.classList.add('__x-ResizeGroupListHeight-enabled');
             };
-            ResizeGroupListHeight.metadata = {
-                description: "グループリストの高さを縮める変更を提供します。"
-            };
             return ResizeGroupListHeight;
         }(ChatworkExtension.ExtensionBase));
+        ResizeGroupListHeight.metadata = {
+            description: "グループリストの高さを縮める変更を提供します。"
+        };
         Extensions.ResizeGroupListHeight = ResizeGroupListHeight;
         /**
          * チャットテキスト入力エリアでメンバー名の補完を提供
@@ -154,16 +154,16 @@ var ChatworkExtension;
         var MemberCompletionInTextArea = (function (_super) {
             __extends(MemberCompletionInTextArea, _super);
             function MemberCompletionInTextArea() {
-                _super.apply(this, arguments);
+                return _super.apply(this, arguments) || this;
             }
             MemberCompletionInTextArea.prototype.onReady = function () {
                 document.body.classList.add('__x-MemberCompletionInTextArea-enabled');
             };
-            MemberCompletionInTextArea.metadata = {
-                description: "チャットテキスト入力エリアでメンバー名の補完を提供します。"
-            };
             return MemberCompletionInTextArea;
         }(ChatworkExtension.ExtensionBase));
+        MemberCompletionInTextArea.metadata = {
+            description: "チャットテキスト入力エリアでメンバー名の補完を提供します。"
+        };
         Extensions.MemberCompletionInTextArea = MemberCompletionInTextArea;
         /**
          * グループのインクリメンタルな絞り込み
@@ -171,7 +171,7 @@ var ChatworkExtension;
         var IncrementalGroupFilter = (function (_super) {
             __extends(IncrementalGroupFilter, _super);
             function IncrementalGroupFilter() {
-                _super.apply(this, arguments);
+                return _super.apply(this, arguments) || this;
             }
             IncrementalGroupFilter.prototype.onReady = function () {
                 var filterMenuE = document.getElementById('_chatFilterMenu');
@@ -217,11 +217,11 @@ var ChatworkExtension;
                     });
                 }
             };
-            IncrementalGroupFilter.metadata = {
-                description: "グループのインクリメンタルな絞り込み機能を提供します。"
-            };
             return IncrementalGroupFilter;
         }(ChatworkExtension.ExtensionBase));
+        IncrementalGroupFilter.metadata = {
+            description: "グループのインクリメンタルな絞り込み機能を提供します。"
+        };
         Extensions.IncrementalGroupFilter = IncrementalGroupFilter;
         /**
          * ピンしているやつにクラスを付ける
@@ -229,7 +229,7 @@ var ChatworkExtension;
         var AddPinnedGroups = (function (_super) {
             __extends(AddPinnedGroups, _super);
             function AddPinnedGroups() {
-                _super.apply(this, arguments);
+                return _super.apply(this, arguments) || this;
             }
             AddPinnedGroups.prototype.onGroupAppear = function (element) {
                 var pin = element.querySelector('.chatListPin');
@@ -240,11 +240,11 @@ var ChatworkExtension;
                     pin.parentElement.classList.add('__x-pinnedLink');
                 }
             };
-            AddPinnedGroups.metadata = {
-                hidden: true
-            };
             return AddPinnedGroups;
         }(ChatworkExtension.ExtensionBase));
+        AddPinnedGroups.metadata = {
+            hidden: true
+        };
         Extensions.AddPinnedGroups = AddPinnedGroups;
         /**
          * シンタックスハイライトするよ
@@ -252,7 +252,7 @@ var ChatworkExtension;
         var SyntaxHighlighter = (function (_super) {
             __extends(SyntaxHighlighter, _super);
             function SyntaxHighlighter() {
-                _super.apply(this, arguments);
+                return _super.apply(this, arguments) || this;
             }
             SyntaxHighlighter.prototype.onReady = function () {
                 var styleE = document.createElement('link');
@@ -293,11 +293,11 @@ var ChatworkExtension;
                     });
                 });
             };
-            SyntaxHighlighter.metadata = {
-                description: "コードのシンタックスハイライトを提供します。"
-            };
             return SyntaxHighlighter;
         }(ChatworkExtension.ExtensionBase));
+        SyntaxHighlighter.metadata = {
+            description: "コードのシンタックスハイライトを提供します。"
+        };
         Extensions.SyntaxHighlighter = SyntaxHighlighter;
         /**
          * フラットスタイル
@@ -305,16 +305,16 @@ var ChatworkExtension;
         var FlatStyle = (function (_super) {
             __extends(FlatStyle, _super);
             function FlatStyle() {
-                _super.apply(this, arguments);
+                return _super.apply(this, arguments) || this;
             }
             FlatStyle.prototype.onReady = function () {
                 document.body.classList.add('__x-FlatStyle-enabled');
             };
-            FlatStyle.metadata = {
-                description: "フラットスタイルを提供します。"
-            };
             return FlatStyle;
         }(ChatworkExtension.ExtensionBase));
+        FlatStyle.metadata = {
+            description: "フラットスタイルを提供します。"
+        };
         Extensions.FlatStyle = FlatStyle;
         /**
          * Toリストの検索を拡張(Migemo)
@@ -322,16 +322,16 @@ var ChatworkExtension;
         var MigemizeToList = (function (_super) {
             __extends(MigemizeToList, _super);
             function MigemizeToList() {
-                _super.apply(this, arguments);
+                return _super.apply(this, arguments) || this;
             }
             MigemizeToList.prototype.onReady = function () {
                 document.body.classList.add('__x-MigemizeToList-enabled');
             };
-            MigemizeToList.metadata = {
-                description: "Toリストの検索を拡張する機能を提供します。"
-            };
             return MigemizeToList;
         }(ChatworkExtension.ExtensionBase));
+        MigemizeToList.metadata = {
+            description: "Toリストの検索を拡張する機能を提供します。"
+        };
         Extensions.MigemizeToList = MigemizeToList;
         /**
          * プレビューダイアログをクリックシールド部分をクリックしても閉じる
@@ -339,16 +339,16 @@ var ChatworkExtension;
         var ClosePreviewDialogOnBackgroundClicked = (function (_super) {
             __extends(ClosePreviewDialogOnBackgroundClicked, _super);
             function ClosePreviewDialogOnBackgroundClicked() {
-                _super.apply(this, arguments);
+                return _super.apply(this, arguments) || this;
             }
             ClosePreviewDialogOnBackgroundClicked.prototype.onReady = function () {
                 document.body.classList.add('__x-ClosePreviewDialogOnBackgroundClicked-enabled');
             };
-            ClosePreviewDialogOnBackgroundClicked.metadata = {
-                description: "プレビューダイアログの背景部分をクリックしても閉じる機能を提供します。"
-            };
             return ClosePreviewDialogOnBackgroundClicked;
         }(ChatworkExtension.ExtensionBase));
+        ClosePreviewDialogOnBackgroundClicked.metadata = {
+            description: "プレビューダイアログの背景部分をクリックしても閉じる機能を提供します。"
+        };
         Extensions.ClosePreviewDialogOnBackgroundClicked = ClosePreviewDialogOnBackgroundClicked;
         /**
          * キーワード反応
@@ -356,7 +356,7 @@ var ChatworkExtension;
         var KeywordHighlight = (function (_super) {
             __extends(KeywordHighlight, _super);
             function KeywordHighlight() {
-                _super.apply(this, arguments);
+                return _super.apply(this, arguments) || this;
             }
             KeywordHighlight.prototype.onReady = function () {
                 var values = (this.extraSettingValue || '').replace(/^\s+|\s+$/g, '');
@@ -372,12 +372,12 @@ var ChatworkExtension;
                     }
                 }
             };
-            KeywordHighlight.metadata = {
-                description: "キーワード機能を提供します。改行でキーワードを区切ることで複数指定できます。",
-                extraSettingType: ChatworkExtension.ExtraSettingType.TextArea
-            };
             return KeywordHighlight;
         }(ChatworkExtension.ExtensionBase));
+        KeywordHighlight.metadata = {
+            description: "キーワード機能を提供します。改行でキーワードを区切ることで複数指定できます。",
+            extraSettingType: ChatworkExtension.ExtraSettingType.TextArea
+        };
         Extensions.KeywordHighlight = KeywordHighlight;
         /**
          * テキストのレスポンスヘッダーを強制的にShift_JISにする
@@ -385,17 +385,17 @@ var ChatworkExtension;
         var RewriteTextResponseContentTypeCharsetShiftJis = (function (_super) {
             __extends(RewriteTextResponseContentTypeCharsetShiftJis, _super);
             function RewriteTextResponseContentTypeCharsetShiftJis() {
-                _super.apply(this, arguments);
+                return _super.apply(this, arguments) || this;
             }
             RewriteTextResponseContentTypeCharsetShiftJis.prototype.onReady = function () {
                 chrome.runtime.sendMessage({ method: 'startTextResponseHeaderCharsetFilter', arguments: [] }, function (result) { });
             };
-            RewriteTextResponseContentTypeCharsetShiftJis.metadata = {
-                description: "テキストのレスポンスヘッダーを強制的にShift_JISにする機能を提供します。",
-                disableByDefault: true
-            };
             return RewriteTextResponseContentTypeCharsetShiftJis;
         }(ChatworkExtension.ExtensionBase));
+        RewriteTextResponseContentTypeCharsetShiftJis.metadata = {
+            description: "テキストのレスポンスヘッダーを強制的にShift_JISにする機能を提供します。",
+            disableByDefault: true
+        };
         Extensions.RewriteTextResponseContentTypeCharsetShiftJis = RewriteTextResponseContentTypeCharsetShiftJis;
     })(Extensions = ChatworkExtension.Extensions || (ChatworkExtension.Extensions = {}));
 })(ChatworkExtension || (ChatworkExtension = {}));

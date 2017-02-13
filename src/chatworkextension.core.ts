@@ -2,15 +2,15 @@
 
 module ChatworkExtension {
     export class ExtensionManager {
-        static LoadExtensionTypes = [];
+        static LoadExtensionTypes: any[] = [];
         static extensions: IExtension[] = [];
 
-        private static _callBridgeQueue = {};
+        private static _callBridgeQueue: any = {};
         private static injectUserCustomScripts: string[] = [];
         private static syncItems: any;
 
         static setup(): void {
-            // states, extraSettings, InjectUserCustomScripts, ExternalInjectUserCustomScripts ‚Ìƒf[ƒ^‚ğ‚Æ‚Á‚Ä‚«‚Ä‚©‚çŠJn
+            // states, extraSettings, InjectUserCustomScripts, ExternalInjectUserCustomScripts ã®ãƒ‡ãƒ¼ã‚¿ã‚’ã¨ã£ã¦ãã¦ã‹ã‚‰é–‹å§‹
             var waitCount = 3;
             var next = () => {
                 if (--waitCount == 0) {
@@ -31,7 +31,7 @@ module ChatworkExtension {
             });
         }
         static setup_(states: { [name: string]: boolean }, extraSettings: { [name: string]: any }): void {
-            // InjectUserCustomScripts‚¾‚¯‚Í“Áêˆµ‚¢‚Åæ‚Éeval‚·‚é
+            // InjectUserCustomScriptsã ã‘ã¯ç‰¹æ®Šæ‰±ã„ã§å…ˆã«evalã™ã‚‹
             if (this.injectUserCustomScripts) {
                 try {
                     new Function("var ChatworkExtension = window.ChatworkExtension;" + this.injectUserCustomScripts.join(";\n"))();
@@ -42,13 +42,13 @@ module ChatworkExtension {
                 }
             }
 
-            // –³Œø‚È‚â‚Â‚Í“Ç‚İ‚Ü‚È‚¢
+            // ç„¡åŠ¹ãªã‚„ã¤ã¯èª­ã¿è¾¼ã¾ãªã„
             this.LoadExtensionTypes = Object.keys(ChatworkExtension.Extensions).map(x => {
-                var t = ChatworkExtension.Extensions[x];
-                var enable = (states[x] != undefined) ? states[x] : !t.metadata.disableByDefault;
+                const type = (<any>ChatworkExtension.Extensions)[x];
+                const enable = (states[x] != undefined) ? states[x] : !type.metadata.disableByDefault;
                 console.log('ChatworkExtension: ' + x + ' (' + (enable ? 'Enabled' : 'Disabled') + ')');
 
-                return enable ? { name: x, ctor: ChatworkExtension.Extensions[x] } : null;
+                return enable ? { name: x, ctor: type } : null;
             }).filter(x => x != null);
             this.extensions = this.LoadExtensionTypes.map(ext => {
                 var instance = new ext.ctor();
@@ -60,10 +60,10 @@ module ChatworkExtension {
                 return instance;
             });
 
-            // ‚Æ‚è‚ ‚¦‚¸‰Šú‰»
+            // ã¨ã‚Šã‚ãˆãšåˆæœŸåŒ–
             this.executeExtensionsEvent(x => x.initialize());
 
-            // DOMContentLoaded ‚ğŠÄ‹‚µ‚Ä‚»‚ê‚ğonReady‚É‚·‚é(‚±‚Ì“_‚Å‚ÍChatwork‚ª‰Šú‰»‚³‚ê‚Ä‚¢‚È‚¢)
+            // DOMContentLoaded ã‚’ç›£è¦–ã—ã¦ãã‚Œã‚’onReadyã«ã™ã‚‹(ã“ã®æ™‚ç‚¹ã§ã¯ChatworkãŒåˆæœŸåŒ–ã•ã‚Œã¦ã„ãªã„)
             document.addEventListener('DOMContentLoaded', () => {
                 this.observeNewChatContent();
                 this.observeNewGroup();
@@ -72,8 +72,8 @@ module ChatworkExtension {
 
                 this.executeExtensionsEvent(x => x.onReady());
 
-                // CWƒIƒuƒWƒFƒNƒg‚Í‚±‚¿‚ç‘¤‚©‚çŒ©‚¦‚È‚¢‚Ì‚ÅƒuƒŠƒbƒW‚ÅŒÄ‚Ño‚·‚½‚ß‚Ì‚Æ
-                // Chatwork(CW)‚Ìinit_loaded‚ğŠÄ‹‚µ‚ÄA‚±‚ê‚ªtrue‚É‚È‚Á‚½‚çChatwork‚Ì“Ç‚İ‚İ‚ªŠ®—¹‚µ‚½‚Æ‚·‚é‚½‚ß
+                // CWã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã¯ã“ã¡ã‚‰å´ã‹ã‚‰è¦‹ãˆãªã„ã®ã§ãƒ–ãƒªãƒƒã‚¸ã§å‘¼ã³å‡ºã™ãŸã‚ã®ã¨
+                // Chatwork(CW)ã®init_loadedã‚’ç›£è¦–ã—ã¦ã€ã“ã‚ŒãŒtrueã«ãªã£ãŸã‚‰Chatworkã®èª­ã¿è¾¼ã¿ãŒå®Œäº†ã—ãŸã¨ã™ã‚‹ãŸã‚
                 this.setupCWBridge();
             });
 
@@ -81,10 +81,10 @@ module ChatworkExtension {
         }
 
         /**
-         * CWƒIƒuƒWƒFƒNƒg‚ğŒÄ‚Ño‚·‚½‚ß‚ÌƒuƒŠƒbƒW‚ÌƒZƒbƒgƒAƒbƒv
+         * CWã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’å‘¼ã³å‡ºã™ãŸã‚ã®ãƒ–ãƒªãƒƒã‚¸ã®ã‚»ãƒƒãƒˆã‚¢ãƒƒãƒ—
          */
         static setupCWBridge(): void {
-            // callCW ƒƒ\ƒbƒh‚ÌŒ‹‰Ê‚ğó‚¯æ‚é‚â‚Â
+            // callCW ãƒ¡ã‚½ãƒƒãƒ‰ã®çµæœã‚’å—ã‘å–ã‚‹ã‚„ã¤
             window.addEventListener('message', (e) => {
                 if (e.data.sender == 'ChatworkExtension.Bridge.CWBridge') {
                     var result = e.data.result;
@@ -101,7 +101,7 @@ module ChatworkExtension {
                 }
             });
 
-            // InitializeWatcher‚ğ·‚µ‚ñ‚ÅƒƒbƒZ[ƒW‚ğ‘Ò‚Â‚Ì‚Å‚·
+            // InitializeWatcherã‚’å·®ã—è¾¼ã‚“ã§ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’å¾…ã¤ã®ã§ã™
             chrome.runtime.connect();
             window.addEventListener('message', (e) => {
                 if (e.data.sender == 'ChatworkExtension.Bridge.InitializeWatcher' && e.data.command == 'Ready') {
@@ -109,7 +109,7 @@ module ChatworkExtension {
                 }
             });
 
-            // ƒuƒŠƒbƒW‚ğ·‚µ‚Ş‚Ì‚Å‚·
+            // ãƒ–ãƒªãƒƒã‚¸ã‚’å·®ã—è¾¼ã‚€ã®ã§ã™
             var scriptE = document.createElement('script');
             scriptE.type = 'text/javascript';
             scriptE.src = chrome.extension.getURL('chatworkextension.bridge.js');
@@ -117,7 +117,7 @@ module ChatworkExtension {
         }
 
         /**
-         * ƒuƒŠƒbƒW‚ğ’Ê‚µ‚ÄCWƒIƒuƒWƒFƒNƒg‚Ìƒƒ\ƒbƒh‚ğŒÄ‚Ño‚µ‚Ü‚·
+         * ãƒ–ãƒªãƒƒã‚¸ã‚’é€šã—ã¦CWã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ãƒ¡ã‚½ãƒƒãƒ‰ã‚’å‘¼ã³å‡ºã—ã¾ã™
          */
         static callCW(method: string, args: any[], callback: (result: any, isError: boolean) => void): void {
             var caller = new Date().valueOf() + '-' + (Math.random() * 10000) + callback.toString();
@@ -142,7 +142,7 @@ module ChatworkExtension {
             });
         }
 
-        // Rx‚É‚µ‚æ‚¤‚©‚Æv‚¢‚Â‚ÂƒfƒJ‚¢‹C‚ª‚·‚é
+        // Rxã«ã—ã‚ˆã†ã‹ã¨æ€ã„ã¤ã¤ãƒ‡ã‚«ã„æ°—ãŒã™ã‚‹
         private static observeNewChatContent(): void {
             var timelineE = document.getElementById('_timeLine');
             this.observeAddElement(document.getElementById('_chatContent'), (addedNode: HTMLElement) => {
@@ -183,15 +183,15 @@ module ChatworkExtension {
             })
         }
 
-        private static observeAddElement(targetElement: HTMLElement, onMutated: (HTMLElement) => void): void {
+        private static observeAddElement(targetElement: HTMLElement, onMutated: (mutated: HTMLElement) => void): void {
             var lockMutationEvent = false;
-            var observer = new WebKitMutationObserver((mutations) => {
+            var observer = new WebKitMutationObserver((mutations: any) => {
                 if (lockMutationEvent) return;
                 lockMutationEvent = true;
-                mutations.forEach((mutation) => {
+                mutations.forEach((mutation: any) => {
                     for (var i = 0; i < mutation.addedNodes.length; i++) {
                         try {
-                            onMutated(mutation.addedNodes[i]);
+                            onMutated(<HTMLElement>mutation.addedNodes[i]);
                         } catch (e) {
                             window.console && console.log(e);
                             window.console && console.log(e.stack);
@@ -240,7 +240,7 @@ module ChatworkExtension {
         disableByDefault: boolean;
         advanced: boolean;
         extraSettingType: ExtraSettingType;
-        extraSettingLocalOnly: boolean; // ‚±‚ê‚ª—LŒø‚È‚Í localStorage ‚ÉŠi”[‚·‚é(—e—Ê‘Îô)
+        extraSettingLocalOnly: boolean; // ã“ã‚ŒãŒæœ‰åŠ¹ãªæ™‚ã¯ localStorage ã«æ ¼ç´ã™ã‚‹(å®¹é‡å¯¾ç­–)
     }
 
     export interface IExternalCustomScriptStorage {

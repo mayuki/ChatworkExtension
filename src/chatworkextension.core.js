@@ -43,10 +43,10 @@ var ChatworkExtension;
             }
             // 無効なやつは読み込まない
             this.LoadExtensionTypes = Object.keys(ChatworkExtension.Extensions).map(function (x) {
-                var t = ChatworkExtension.Extensions[x];
-                var enable = (states[x] != undefined) ? states[x] : !t.metadata.disableByDefault;
+                var type = ChatworkExtension.Extensions[x];
+                var enable = (states[x] != undefined) ? states[x] : !type.metadata.disableByDefault;
                 console.log('ChatworkExtension: ' + x + ' (' + (enable ? 'Enabled' : 'Disabled') + ')');
-                return enable ? { name: x, ctor: ChatworkExtension.Extensions[x] } : null;
+                return enable ? { name: x, ctor: type } : null;
             }).filter(function (x) { return x != null; });
             this.extensions = this.LoadExtensionTypes.map(function (ext) {
                 var instance = new ext.ctor();
@@ -195,12 +195,12 @@ var ChatworkExtension;
             });
             observer.observe(targetElement, { childList: true, subtree: true, characterData: false, attributes: false });
         };
-        ExtensionManager.LoadExtensionTypes = [];
-        ExtensionManager.extensions = [];
-        ExtensionManager._callBridgeQueue = {};
-        ExtensionManager.injectUserCustomScripts = [];
         return ExtensionManager;
     }());
+    ExtensionManager.LoadExtensionTypes = [];
+    ExtensionManager.extensions = [];
+    ExtensionManager._callBridgeQueue = {};
+    ExtensionManager.injectUserCustomScripts = [];
     ChatworkExtension.ExtensionManager = ExtensionManager;
     var ExtensionBase = (function () {
         function ExtensionBase() {
@@ -215,14 +215,13 @@ var ChatworkExtension;
         return ExtensionBase;
     }());
     ChatworkExtension.ExtensionBase = ExtensionBase;
+    var ExtraSettingType;
     (function (ExtraSettingType) {
         ExtraSettingType[ExtraSettingType["None"] = 0] = "None";
         ExtraSettingType[ExtraSettingType["TextArea"] = 1] = "TextArea";
         ExtraSettingType[ExtraSettingType["Dropdown"] = 2] = "Dropdown";
-    })(ChatworkExtension.ExtraSettingType || (ChatworkExtension.ExtraSettingType = {}));
-    var ExtraSettingType = ChatworkExtension.ExtraSettingType;
+    })(ExtraSettingType = ChatworkExtension.ExtraSettingType || (ChatworkExtension.ExtraSettingType = {}));
 })(ChatworkExtension || (ChatworkExtension = {}));
-var ChatworkExtension;
 (function (ChatworkExtension) {
     var Utility;
     (function (Utility) {

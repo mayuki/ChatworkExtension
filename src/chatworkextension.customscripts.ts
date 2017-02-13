@@ -21,12 +21,12 @@ $(() => {
     // JSが読み込まれるのを雑に待つ
     setTimeout(() => {
         // ESC対応とIME対応のアダプター
-        function CustomTextareaAdapter(element, completer, option) {
+        function CustomTextareaAdapter(element: any, completer: any, option: any) {
             element.addEventListener('compositionend', () => this.completer.trigger(this.getTextFromHeadToCaret(), true));
             this.initialize(element, completer, option);
         }
         $.extend(CustomTextareaAdapter.prototype, $.fn.textcomplete['Textarea'].prototype, {
-            _skipSearch: (clickEvent) => {
+            _skipSearch: (clickEvent: any) => {
                 if (clickEvent.keyCode === 27) return true;
                 $.fn.textcomplete['Textarea'].prototype._skipSearch.apply(this, [clickEvent]);
             }
@@ -34,25 +34,25 @@ $(() => {
         $('#_chatText').textcomplete([
             {
                 match: /\B@(\w*)$/,
-                search: (term, callback) => {
-                    const memberIds = RM.getSortedMemberList().filter(x => x !== AC.myid.toString());
+                search: (term: any, callback: any) => {
+                    const memberIds = RM.getSortedMemberList().filter((x: any) => x !== AC.myid.toString());
                     const re = new RegExp(MigemoJS.getRegExp(term), "i");
-                    callback(memberIds.map((memberId) => {
+                    callback(memberIds.map((memberId: any) => {
                         const searchKeys = AC.getSearchKeys(memberId).concat([AC.getTwitter(memberId)]).join(' ');
                         return re.test(searchKeys) ? memberId : null;
-                    }).filter(x => x !== null));
+                    }).filter((x: any) => x !== null));
                 },
-                template: (memberId) => {
+                template: (memberId: any) => {
                     const displayName = CW.is_business && ST.data.private_nickname && !RM.isInternal() ? AC.getDefaultNickName(memberId) : AC.getNickName(memberId);
                     return CW.getAvatarPanel(memberId, { clicktip: true, size: "small" }) + ' <span class="autotrim">' + escape_html(displayName) + "</span>";
                 },
                 index: 1,
-                replace: (memberId) => {
+                replace: (memberId: any) => {
                     const displayName = CW.is_business && ST.data.private_nickname && !RM.isInternal() ? AC.getDefaultNickName(memberId) : AC.getNickName(memberId);
-                    return '[To:' + memberId + '] ' + displayName + "\n";
+                    return '[To:' + memberId + '] ' + displayName;
                 }
             }
-        ], { adapter: CustomTextareaAdapter, appendTo: '.chatSendAreaContent' });
+        ], { adapter: CustomTextareaAdapter, appendTo: '.chatInput' });
     }, 1000);
 });
 
@@ -79,7 +79,7 @@ $(() => {
         this.searchbox && (f = this.searchbox.getVal().toLowerCase().replace(/^\s+|\s+$/g, "").split(/\s+/));
         var re = new RegExp(MigemoJS.getRegExp(f.join(' ')), "i");
         for (var i = a.length, h = 0; h < i; h++) {
-            var j = ""
+            var j: any = ""
                 , k = a[h]
                 , j = k.keys != void 0 ? k.keys.join(" ") : k.label
                 , j = j.toLowerCase();
@@ -124,7 +124,7 @@ $(() => {
 
     var widget = $("#_previewLinkDialog").data('cwui-cwDialog');
     var origOpen = widget.option.open;
-    widget.option.open = function (type, url) {
+    widget.option.open = function (type: any, url: any) {
         if (type == 'x-image') {
             widget.data.url = url;
             openCustom_Image.apply(widget, arguments);
@@ -134,7 +134,7 @@ $(() => {
         }
     }
 
-    function openCustom_Image(type, url, e, f) {
+    function openCustom_Image(type: any, url: any, e: any, f: any) {
         var i: any = {
             title: url
         };
@@ -188,7 +188,7 @@ $(() => {
 $(() => {
     if (!document.body.classList.contains('__x-ClosePreviewDialogOnBackgroundClicked-enabled')) return;
 
-    $(document).on('click', '._cwDGBase:visible', (e) => {
+    $(document).on('click', '._cwDGBase:visible', (e: any) => {
         $(e.target).find('.dialog').data('cwui-cwDialog').close();
     });
 });
