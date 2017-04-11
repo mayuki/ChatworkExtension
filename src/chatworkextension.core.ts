@@ -168,11 +168,11 @@ module ChatworkExtension {
             this.observeAddElement(document.body, (addedNode: HTMLElement) => {
                 if (!addedNode.querySelectorAll) return;
 
-                if (addedNode.classList && addedNode.classList.contains('_avatar')) {
+                if (addedNode.classList && (addedNode.classList.contains('_avatar') || addedNode.classList.contains('messageBadge__avatar'))) {
                     applyStyles([<HTMLImageElement>addedNode]);
                 }
 
-                applyStyles(Array.apply(null, addedNode.querySelectorAll('._avatar')));
+                applyStyles(Array.apply(null, addedNode.querySelectorAll('._avatar, .messageBadge__avatar')));
             })
         }
         private static observeToList(): void {

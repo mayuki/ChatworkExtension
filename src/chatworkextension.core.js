@@ -160,10 +160,10 @@ var ChatworkExtension;
             this.observeAddElement(document.body, function (addedNode) {
                 if (!addedNode.querySelectorAll)
                     return;
-                if (addedNode.classList && addedNode.classList.contains('_avatar')) {
+                if (addedNode.classList && (addedNode.classList.contains('_avatar') || addedNode.classList.contains('messageBadge__avatar'))) {
                     applyStyles([addedNode]);
                 }
-                applyStyles(Array.apply(null, addedNode.querySelectorAll('._avatar')));
+                applyStyles(Array.apply(null, addedNode.querySelectorAll('._avatar, .messageBadge__avatar')));
             });
         };
         ExtensionManager.observeToList = function () {
