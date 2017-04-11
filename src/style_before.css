@@ -7,6 +7,10 @@
 }
 
 /* ユーザー名補完のリスト */
+.dropdown-menu.textcomplete-dropdown {
+    max-height: 100px;
+    overflow: auto;
+}
 .textcomplete-item {
     border: none !important;
 }
@@ -19,4 +23,7 @@
 }
 .textcomplete-item ._avatar {
     border-radius: 16px;
+    width: 16px ! important;
+    height: 16px ! important;
+    margin-right: 4px;
 }

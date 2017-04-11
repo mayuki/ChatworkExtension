@@ -27,7 +27,7 @@ $(() => {
         }
         $.extend(CustomTextareaAdapter.prototype, $.fn.textcomplete['Textarea'].prototype, {
             _skipSearch: (clickEvent: any) => {
-                if (clickEvent.keyCode === 27) return true;
+                if (clickEvent.keyCode === 27 || clickEvent.keyCode === 40 /* down */ || clickEvent.keyCode === 38 /* up */) return true;
                 $.fn.textcomplete['Textarea'].prototype._skipSearch.apply(this, [clickEvent]);
             }
         });
@@ -49,7 +49,7 @@ $(() => {
                 index: 1,
                 replace: (memberId: any) => {
                     const displayName = CW.is_business && ST.data.private_nickname && !RM.isInternal() ? AC.getDefaultNickName(memberId) : AC.getNickName(memberId);
-                    return '[To:' + memberId + '] ' + displayName;
+                    return '[To:' + memberId + '] ' + displayName + "\n";
                 }
             }
         ], { adapter: CustomTextareaAdapter, appendTo: '.chatInput' });
