@@ -360,4 +360,55 @@ module ChatworkExtension.Extensions {
             chrome.runtime.sendMessage({ method: 'startTextResponseHeaderCharsetFilter', arguments: [] }, (result: string) => { });
         }
     }
+
+    
+    /**
+     * アバターアイコン差し替えマン
+     */
+    export class AlternateAvatars extends ChatworkExtension.ExtensionBase {
+        static metadata = {
+            description: "アバターアイコンを差し替えます。一行ごとユーザのIDと差し替えるアバターアイコンURLを列挙します。",
+            advanced: true,
+            extraSettingType: ExtraSettingType.TextArea,
+            extraSettingLocalOnly: true
+        }
+
+        avatarMapping: { [key: string]: string };
+        catchAllMapping: string;
+
+        onReady(): void {
+            this.avatarMapping = {};
+            this.catchAllMapping = null;
+
+            // localStorageなので
+            chrome.runtime.sendMessage({ method: 'readStorage', arguments: ['AlternateAvatars'] }, (result: string) => {
+                if (result != null) {
+                    (result || '')
+                        .split(/\r?\n/)
+                        .map(x => x.replace(/^\s+|\s+$/g, ''))
+                        .filter(x => !x.match(/^#/))
+                        .map(x => x.split(/,/))
+                        .filter(x => x.length == 2)
+                        .reduce((r, v) => { r[v[0]] = v[1]; return r; }, this.avatarMapping);
+
+                    this.catchAllMapping = this.avatarMapping['*'] || null;
+
+                    console.log(result);
+                    Object.keys(this.avatarMapping).forEach(x => console.log('avatar: [%s] %s', x, this.avatarMapping[x]));
+                }
+            });
+        }
+
+        onAvatarsAppear(elements: HTMLImageElement[]): void {
+            elements.forEach(x => {
+                if (x.dataset['aid']) {
+                    if (this.avatarMapping[x.dataset['aid']] != null) {
+                        x.src = this.avatarMapping[x.dataset['aid']];
+                    } else if (this.catchAllMapping != null) {
+                        x.src = this.catchAllMapping;
+                    }
+                }
+            });
+        }
+    }
 }

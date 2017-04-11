@@ -417,5 +417,55 @@ var ChatworkExtension;
             disableByDefault: true
         };
         Extensions.RewriteTextResponseContentTypeCharsetShiftJis = RewriteTextResponseContentTypeCharsetShiftJis;
+        /**
+         * アバターアイコン差し替えマン
+         */
+        var AlternateAvatars = (function (_super) {
+            __extends(AlternateAvatars, _super);
+            function AlternateAvatars() {
+                return _super.apply(this, arguments) || this;
+            }
+            AlternateAvatars.prototype.onReady = function () {
+                var _this = this;
+                this.avatarMapping = {};
+                this.catchAllMapping = null;
+                // localStorageなので
+                chrome.runtime.sendMessage({ method: 'readStorage', arguments: ['AlternateAvatars'] }, function (result) {
+                    if (result != null) {
+                        (result || '')
+                            .split(/\r?\n/)
+                            .map(function (x) { return x.replace(/^\s+|\s+$/g, ''); })
+                            .filter(function (x) { return !x.match(/^#/); })
+                            .map(function (x) { return x.split(/,/); })
+                            .filter(function (x) { return x.length == 2; })
+                            .reduce(function (r, v) { r[v[0]] = v[1]; return r; }, _this.avatarMapping);
+                        _this.catchAllMapping = _this.avatarMapping['*'] || null;
+                        console.log(result);
+                        Object.keys(_this.avatarMapping).forEach(function (x) { return console.log('avatar: [%s] %s', x, _this.avatarMapping[x]); });
+                    }
+                });
+            };
+            AlternateAvatars.prototype.onAvatarsAppear = function (elements) {
+                var _this = this;
+                elements.forEach(function (x) {
+                    if (x.dataset['aid']) {
+                        if (_this.avatarMapping[x.dataset['aid']] != null) {
+                            x.src = _this.avatarMapping[x.dataset['aid']];
+                        }
+                        else if (_this.catchAllMapping != null) {
+                            x.src = _this.catchAllMapping;
+                        }
+                    }
+                });
+            };
+            return AlternateAvatars;
+        }(ChatworkExtension.ExtensionBase));
+        AlternateAvatars.metadata = {
+            description: "アバターアイコンを差し替えます。一行ごとユーザのIDと差し替えるアバターアイコンURLを列挙します。",
+            advanced: true,
+            extraSettingType: ChatworkExtension.ExtraSettingType.TextArea,
+            extraSettingLocalOnly: true
+        };
+        Extensions.AlternateAvatars = AlternateAvatars;
     })(Extensions = ChatworkExtension.Extensions || (ChatworkExtension.Extensions = {}));
 })(ChatworkExtension || (ChatworkExtension = {}));
