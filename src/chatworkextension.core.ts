@@ -191,6 +191,7 @@ module ChatworkExtension {
                 mutations.forEach((mutation: any) => {
                     for (var i = 0; i < mutation.addedNodes.length; i++) {
                         try {
+                            if (mutation.addedNodes[i].nodeType !== document.ELEMENT_NODE) continue;
                             onMutated(<HTMLElement>mutation.addedNodes[i]);
                         } catch (e) {
                             window.console && console.log(e);

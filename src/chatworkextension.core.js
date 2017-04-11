@@ -183,6 +183,8 @@ var ChatworkExtension;
                 mutations.forEach(function (mutation) {
                     for (var i = 0; i < mutation.addedNodes.length; i++) {
                         try {
+                            if (mutation.addedNodes[i].nodeType !== document.ELEMENT_NODE)
+                                continue;
                             onMutated(mutation.addedNodes[i]);
                         }
                         catch (e) {
