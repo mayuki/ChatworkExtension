@@ -392,9 +392,6 @@ module ChatworkExtension.Extensions {
                         .reduce((r, v) => { r[v[0]] = v[1]; return r; }, this.avatarMapping);
 
                     this.catchAllMapping = this.avatarMapping['*'] || null;
-
-                    console.log(result);
-                    Object.keys(this.avatarMapping).forEach(x => console.log('avatar: [%s] %s', x, this.avatarMapping[x]));
                 }
             });
         }

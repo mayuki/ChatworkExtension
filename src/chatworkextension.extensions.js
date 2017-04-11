@@ -440,8 +440,6 @@ var ChatworkExtension;
                             .filter(function (x) { return x.length == 2; })
                             .reduce(function (r, v) { r[v[0]] = v[1]; return r; }, _this.avatarMapping);
                         _this.catchAllMapping = _this.avatarMapping['*'] || null;
-                        console.log(result);
-                        Object.keys(_this.avatarMapping).forEach(function (x) { return console.log('avatar: [%s] %s', x, _this.avatarMapping[x]); });
                     }
                 });
             };
