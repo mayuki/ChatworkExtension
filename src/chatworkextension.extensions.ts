@@ -201,12 +201,29 @@ module ChatworkExtension.Extensions {
         };
 
         onGroupAppear(element: HTMLElement): void {
-            var pin = <HTMLElement>element.querySelector('.chatListPin');
+            var pin = <HTMLElement>element.querySelector('.roomListItem__pin');
             if (pin == null) {
                 return;
             }
-            if (!pin.classList.contains('chatListPinOff')) {
-                pin.parentElement.classList.add('__x-pinnedLink');
+            if (pin.classList.contains('roomListItem__pin--checked')) {
+                element.classList.add('__x-pinnedLink');
+            }
+        }
+    }
+
+    
+    /**
+     * ピンしているやつにクラスを付ける
+     */
+    export class AddMention extends ChatworkExtension.ExtensionBase {
+        static metadata = {
+            hidden: true
+        };
+
+        onGroupAppear(element: HTMLElement): void {
+            var badge = <HTMLElement>element.querySelector('.roomListBadges__mentionBadge');
+            if (badge == null) {
+                element.classList.add('__x-hasMention');
             }
         }
     }

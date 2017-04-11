@@ -232,12 +232,12 @@ var ChatworkExtension;
                 return _super.apply(this, arguments) || this;
             }
             AddPinnedGroups.prototype.onGroupAppear = function (element) {
-                var pin = element.querySelector('.chatListPin');
+                var pin = element.querySelector('.roomListItem__pin');
                 if (pin == null) {
                     return;
                 }
-                if (!pin.classList.contains('chatListPinOff')) {
-                    pin.parentElement.classList.add('__x-pinnedLink');
+                if (pin.classList.contains('roomListItem__pin--checked')) {
+                    element.classList.add('__x-pinnedLink');
                 }
             };
             return AddPinnedGroups;
@@ -246,6 +246,26 @@ var ChatworkExtension;
             hidden: true
         };
         Extensions.AddPinnedGroups = AddPinnedGroups;
+        /**
+         * ピンしているやつにクラスを付ける
+         */
+        var AddMention = (function (_super) {
+            __extends(AddMention, _super);
+            function AddMention() {
+                return _super.apply(this, arguments) || this;
+            }
+            AddMention.prototype.onGroupAppear = function (element) {
+                var badge = element.querySelector('.roomListBadges__mentionBadge');
+                if (badge == null) {
+                    element.classList.add('__x-hasMention');
+                }
+            };
+            return AddMention;
+        }(ChatworkExtension.ExtensionBase));
+        AddMention.metadata = {
+            hidden: true
+        };
+        Extensions.AddMention = AddMention;
         /**
          * シンタックスハイライトするよ
          */

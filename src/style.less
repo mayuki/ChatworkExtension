@@ -61,7 +61,9 @@
         display: inline;
     }
     .roomListBadges {
-        float: right;
+        position: absolute;
+        right: 8px;
+        top: 0;
         transform: scale(0.6);
     }
     .roomListItem__pinContainer {
@@ -100,7 +102,7 @@
         border-top-color: rgba(0,0,0,0.12);
     }
     /* ピン止め */
-    ._roomLink.__x-pinnedLink
+    ._roomLink.__x-pinnedLink:not(.roomListItem--selected)
     {
       background-color: #e8e8e8;
     }
