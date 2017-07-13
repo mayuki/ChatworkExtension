@@ -98,13 +98,16 @@
     .menuListTitle > li {
         overflow: hidden;
         padding: 2.5px 5px;
-        border-bottom-color: transparent;
         border-top-color: rgba(0,0,0,0.12);
     }
     /* ピン止め */
     ._roomLink.__x-pinnedLink:not(.roomListItem--selected)
     {
-      background-color: #e8e8e8;
+        background-color: #e8e8e8;
+
+        &:hover {
+            background-color: #f2f2f2;
+        }
     }
     ._roomLink.__x-pinnedLink + ._roomLink:not(.__x-pinnedLink)
     {
