@@ -354,6 +354,23 @@ var ChatworkExtension;
         };
         Extensions.MigemizeToList = MigemizeToList;
         /**
+         * ルーム内のメッセージをすべて既読
+         */
+        var RoomMarkAsRead = (function (_super) {
+            __extends(RoomMarkAsRead, _super);
+            function RoomMarkAsRead() {
+                return _super.apply(this, arguments) || this;
+            }
+            RoomMarkAsRead.prototype.onReady = function () {
+                document.body.classList.add('__x-RoomMarkAsRead-enabled');
+            };
+            return RoomMarkAsRead;
+        }(ChatworkExtension.ExtensionBase));
+        RoomMarkAsRead.metadata = {
+            description: "ルーム内のメッセージをすべて既読にする機能を提供します。"
+        };
+        Extensions.RoomMarkAsRead = RoomMarkAsRead;
+        /**
          * プレビューダイアログをクリックシールド部分をクリックしても閉じる
          */
         var ClosePreviewDialogOnBackgroundClicked = (function (_super) {

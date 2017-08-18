@@ -67,6 +67,31 @@ $(() => {
 });
 
 
+// すべて既読ボタン
+$(() => {
+    if (!document.body.classList.contains('__x-RoomMarkAsRead-enabled')) return;
+    
+    const buttonHtml = `
+        <div class="chatRoomHeader__markAsRead" style="margin-right: 8px;">
+            <a class="button btnLarge" href="#">✔すべて既読</a>
+        </div>
+    `;
+
+    const temp = document.createElement('div');
+    temp.innerHTML = buttonHtml;
+    const buttonE = temp.children[0];
+    const buttonAnchorE = buttonE.querySelector('a');
+    buttonAnchorE.onclick = () => {
+        CW.post('gateway.php', { body_params: {cmd:"update_mute_setting",rid:RL.focused_room_id,mute:1}, query_params: {} },
+            () => {
+                CW.post('gateway.php', { body_params: {cmd:"update_mute_setting",rid:RL.focused_room_id,mute:0}, query_params: {} });
+            });
+    };
+    
+    const actionButtonContainer = document.querySelector('.chatRoomHeader__actionButtonContainer');
+    actionButtonContainer.insertAdjacentElement('afterbegin', buttonE);
+});
+
 // ToリストをMigemo化するやつ
 $(() => {
     if (!document.body.classList.contains('__x-MigemizeToList-enabled')) return;

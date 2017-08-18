@@ -52,6 +52,23 @@ $(function () {
         return _getSortedRoomList.apply(this, ["name"]);
     };
 });
+// すべて既読ボタン
+$(function () {
+    if (!document.body.classList.contains('__x-RoomMarkAsRead-enabled'))
+        return;
+    var buttonHtml = "\n        <div class=\"chatRoomHeader__markAsRead\" style=\"margin-right: 8px;\">\n            <a class=\"button btnLarge\" href=\"#\">\u2714\u3059\u3079\u3066\u65E2\u8AAD</a>\n        </div>\n    ";
+    var temp = document.createElement('div');
+    temp.innerHTML = buttonHtml;
+    var buttonE = temp.children[0];
+    var buttonAnchorE = buttonE.querySelector('a');
+    buttonAnchorE.onclick = function () {
+        CW.post('gateway.php', { body_params: { cmd: "update_mute_setting", rid: RL.focused_room_id, mute: 1 }, query_params: {} }, function () {
+            CW.post('gateway.php', { body_params: { cmd: "update_mute_setting", rid: RL.focused_room_id, mute: 0 }, query_params: {} });
+        });
+    };
+    var actionButtonContainer = document.querySelector('.chatRoomHeader__actionButtonContainer');
+    actionButtonContainer.insertAdjacentElement('afterbegin', buttonE);
+});
 // ToリストをMigemo化するやつ
 $(function () {
     if (!document.body.classList.contains('__x-MigemizeToList-enabled'))

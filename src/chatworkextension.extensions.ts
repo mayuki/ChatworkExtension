@@ -305,7 +305,18 @@ module ChatworkExtension.Extensions {
             document.body.classList.add('__x-MigemizeToList-enabled');
         }
     }
+    /**
+     * ルーム内のメッセージをすべて既読
+     */
+    export class RoomMarkAsRead extends ChatworkExtension.ExtensionBase {
+        static metadata = {
+            description: "ルーム内のメッセージをすべて既読にする機能を提供します。"
+        }
 
+        onReady(): void {
+            document.body.classList.add('__x-RoomMarkAsRead-enabled');
+        }
+    }
     /**
      * プレビューダイアログをクリックシールド部分をクリックしても閉じる
      */
