@@ -317,18 +317,6 @@ module ChatworkExtension.Extensions {
             document.body.classList.add('__x-RoomMarkAsRead-enabled');
         }
     }
-    /**
-     * プレビューダイアログをクリックシールド部分をクリックしても閉じる
-     */
-    export class ClosePreviewDialogOnBackgroundClicked extends ChatworkExtension.ExtensionBase {
-        static metadata = {
-            description: "プレビューダイアログの背景部分をクリックしても閉じる機能を提供します。"
-        }
-
-        onReady(): void {
-            document.body.classList.add('__x-ClosePreviewDialogOnBackgroundClicked-enabled');
-        }
-    }
 
     /**
      * キーワード反応

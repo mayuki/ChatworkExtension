@@ -167,11 +167,3 @@ $(function () {
         }).apply(this);
     }
 });
-// プレビューダイアログの背景をクリックしたら閉じるやつ
-$(function () {
-    if (!document.body.classList.contains('__x-ClosePreviewDialogOnBackgroundClicked-enabled'))
-        return;
-    $(document).on('click', '._cwDGBase:visible', function (e) {
-        $(e.target).find('.dialog').data('cwui-cwDialog').close();
-    });
-});

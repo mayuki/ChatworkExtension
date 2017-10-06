@@ -371,23 +371,6 @@ var ChatworkExtension;
         };
         Extensions.RoomMarkAsRead = RoomMarkAsRead;
         /**
-         * プレビューダイアログをクリックシールド部分をクリックしても閉じる
-         */
-        var ClosePreviewDialogOnBackgroundClicked = (function (_super) {
-            __extends(ClosePreviewDialogOnBackgroundClicked, _super);
-            function ClosePreviewDialogOnBackgroundClicked() {
-                return _super.apply(this, arguments) || this;
-            }
-            ClosePreviewDialogOnBackgroundClicked.prototype.onReady = function () {
-                document.body.classList.add('__x-ClosePreviewDialogOnBackgroundClicked-enabled');
-            };
-            return ClosePreviewDialogOnBackgroundClicked;
-        }(ChatworkExtension.ExtensionBase));
-        ClosePreviewDialogOnBackgroundClicked.metadata = {
-            description: "プレビューダイアログの背景部分をクリックしても閉じる機能を提供します。"
-        };
-        Extensions.ClosePreviewDialogOnBackgroundClicked = ClosePreviewDialogOnBackgroundClicked;
-        /**
          * キーワード反応
          */
         var KeywordHighlight = (function (_super) {
