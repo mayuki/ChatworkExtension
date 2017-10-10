@@ -18,11 +18,44 @@ $(() => {
     "use strict";
     if (!document.body.classList.contains('__x-MemberCompletionInTextArea-enabled')) return;
 
+    // チャットメッセージ入力欄
+    var chatText = $('#_chatText');
+
+    // オリジナルのチャットメッセージkeyupイベントリスナーを取得
+    var events = $._data(chatText.get(0), "events");
+    var originalKeyupLisnters:any[] = events.keyup
+        .filter((listener: any) => listener != undefined)
+        .map((listener: any) => listener.handler)
+
     // JSが読み込まれるのを雑に待つ
     setTimeout(() => {
         // ESC対応とIME対応のアダプター
         function CustomTextareaAdapter(element: any, completer: any, option: any) {
             element.addEventListener('compositionend', () => this.completer.trigger(this.getTextFromHeadToCaret(), true));
+
+            // プルダウン（候補一覧）表示時にチャット入力欄のKeyupイベントを無効にする
+            completer.$el.on('textComplete:show', function() {
+                if (completer && completer.dropdown.shown === false) {
+                    originalKeyupLisnters.forEach((listener: any) => {
+                        chatText.off("keyup", listener);
+                    })
+                }
+            });
+            // プルダウン（候補一覧）非表示時にチャット入力欄のKeyupイベントを有効にする
+            completer.$el.on('textComplete:hide', function(e) {
+                var enableKeyup = function(e) {
+                    if (e.which == 13) {
+                        originalKeyupLisnters.forEach((listener: any) => {
+                            chatText.on("keyup", listener);
+                        })
+                    }
+                    chatText.off('keyup', enableKeyup);
+                }
+                if (completer && completer.dropdown.shown === true) {
+                    // 「textComplete:hide」が発火されるのがkeydown時なので、keyupが実行された後に元々のkeyupイベントを有効化する
+                    chatText.on('keyup', enableKeyup);
+                }
+            });
             this.initialize(element, completer, option);
         }
         $.extend(CustomTextareaAdapter.prototype, $.fn.textcomplete['Textarea'].prototype, {
