@@ -150,19 +150,22 @@ module ChatworkExtension.Extensions {
 
         onChatworkReady(): void {
             this._inputE = document.createElement('input');
-            this._inputE.style.left = '3px';
-            this._inputE.style.top = '40px';
-            this._inputE.style.width = '95%';
-            this._inputE.style.position = 'absolute';
+            this._inputE.style.width = '100%';
+            this._inputE.style.border = 'none';
+            this._inputE.style.borderBottom = '1px solid #ccc';
+            this._inputE.style.boxShadow = 'none';
             this._inputE.type = 'search';
-            this._inputE.placeholder = 'グループ名で検索'; // FIXME: placeholder属性をlabelとして使うとか最低最悪なのでいつか直す
+            this._inputE.placeholder = 'グループ名で絞り込み...'; // FIXME: placeholder属性をlabelとして使うとか最低最悪なのでいつか直す
 
             this._inputE.addEventListener('change', () => this.updateFilter());
             this._inputE.addEventListener('keyup', () => this.updateFilter());
 
-            var filterMenuE = document.getElementById('_chatFilterMenu');
-            filterMenuE.style.height = '74px';
-            filterMenuE.appendChild(this._inputE);
+            const inputFieldHeaderE = document.createElement('div');
+            inputFieldHeaderE.className = 'roomListHeader';
+            inputFieldHeaderE.appendChild(this._inputE);
+
+            const sideContentMenuHeader = document.getElementById('_sideContentMenu__header');
+            sideContentMenuHeader.insertAdjacentElement('afterend', inputFieldHeaderE);
         }
 
         onGroupAppear(element: HTMLElement): void {
