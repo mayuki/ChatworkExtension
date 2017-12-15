@@ -232,11 +232,8 @@ var ChatworkExtension;
                 return _super.apply(this, arguments) || this;
             }
             AddPinnedGroups.prototype.onGroupAppear = function (element) {
-                var pin = element.querySelector('.roomListItem__pin');
-                if (pin == null) {
-                    return;
-                }
-                if (pin.classList.contains('roomListItem__pin--checked')) {
+                var pin = element.querySelector('.roomListItem__pinContainer--active');
+                if (pin != null) {
                     element.classList.add('__x-pinnedLink');
                 }
             };
@@ -255,8 +252,8 @@ var ChatworkExtension;
                 return _super.apply(this, arguments) || this;
             }
             AddMention.prototype.onGroupAppear = function (element) {
-                var badge = element.querySelector('.roomListBadges__mentionBadge');
-                if (badge == null) {
+                var badge = element.querySelector('.roomListBadges__unreadBadge--hasMemtion');
+                if (badge != null) {
                     element.classList.add('__x-hasMention');
                 }
             };

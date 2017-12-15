@@ -201,11 +201,8 @@ module ChatworkExtension.Extensions {
         };
 
         onGroupAppear(element: HTMLElement): void {
-            var pin = <HTMLElement>element.querySelector('.roomListItem__pin');
-            if (pin == null) {
-                return;
-            }
-            if (pin.classList.contains('roomListItem__pin--checked')) {
+            var pin = <HTMLElement>element.querySelector('.roomListItem__pinContainer--active');
+            if (pin != null) {
                 element.classList.add('__x-pinnedLink');
             }
         }
@@ -221,8 +218,8 @@ module ChatworkExtension.Extensions {
         };
 
         onGroupAppear(element: HTMLElement): void {
-            var badge = <HTMLElement>element.querySelector('.roomListBadges__mentionBadge');
-            if (badge == null) {
+            var badge = <HTMLElement>element.querySelector('.roomListBadges__unreadBadge--hasMemtion');
+            if (badge != null) {
                 element.classList.add('__x-hasMention');
             }
         }

@@ -34,7 +34,7 @@
     .chatListTitleArea + .incomplete {
         position: absolute;
         right: 0;
-        transform: scale(0.7);
+        transform: scale(0.9);
         margin-left: 10px;
         width: 100px;
         text-align: left;
@@ -43,13 +43,13 @@
     #_roomListItems .roomListItem {
         height: 20px;
         min-height: 0;
-        padding: 3px 0 3px 10px;
+        padding: 1px 0 5px 10px;
     }
     #_roomListItems .roomListItem__iconContainer {
         width: 16px;
-        height: 16px;
+        height: 24px;
     }
-    #_roomListItems .roomIcon img {
+    #_roomListItems .roomListItem__iconContainer .avatarMedium {
         width: 16px;
         height: 16px;
     }
@@ -63,15 +63,44 @@
     }
     .roomListBadges {
         position: absolute;
-        right: 8px;
-        top: 4px;
-        transform: scale(0.7);
+        right: 24px;
+        top: 6px;
+        transform: scale(0.8);
     }
     .roomListItem__pinContainer {
         top: 0;
     }
     .roomListItem__pin {
-        transform: scale(0.7);
+        transform: scale(0.8);
+        margin-top: 4px;
+    }
+
+    // 未読バッジ
+    .roomListBadges__unreadBadge {
+        max-width: 64px; // 幅を増やす
+    }
+    .roomListBadges__unreadBadgeText {
+        max-width: 64px; // 幅を増やす
+    }
+    .roomListBadges__unreadBadge--hasMemtion {
+        .roomListBadges__unreadBadgeText {
+            margin-right: 16px;
+        }
+    }
+    // メンションバッジ
+    .roomListBadges__unreadBadge--hasMemtion:after {
+        content: "TO";
+        position: absolute;
+        top: -3px;
+        right: -9px;
+        box-sizing: border-box;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        border: 2px solid #f2f2f2;
+        background-color: #00bf9b;
+        color: #fff;
+        text-align: center;
     }
     
     .chatListMeta {
@@ -90,17 +119,7 @@
 /* -------------------------------------------------- */
 .__x-FlatStyle-enabled {
     /* ---- グループリスト系 ----- */
-    /* 左側パネル */
-    .sideContent {
-        background: #f0f0f0;
-    }
 
-    /* グループ名の項目 */
-    .menuListTitle > li {
-        overflow: hidden;
-        padding: 2.5px 5px;
-        border-top-color: rgba(0,0,0,0.12);
-    }
     /* ピン止め */
     ._roomLink.__x-pinnedLink:not(.roomListItem--selected)
     {
@@ -115,42 +134,9 @@
       border-top: 4px solid #ccc;
     }
 
-    .sideContentHl {
-        background: #f0f0f0;
-        color: #000;
-        border-color: #f0f0f0;
-    }
-    .chatFilterMenu {
-        box-shadow: none;
-        border-bottom-color: #f0f0f0;
-    }
-
-    .chatListUnreadNum {
-        box-shadow: none;
-        background-image: none;
-    }
-
     .chatRoomListArea .menuListTitleSelected, .chatRoomListArea .menuListTitleSelected:hover {
         text-shadow: none;
         background-color: #98958a;
-    }
-
-    .sideContentHl {
-        /*display: none;
-        height: 0;
-        overflow: hidden;*/
-    }
-    .sideTitleBtn {
-        right: 40px;
-        z-index: 2;
-    }
-
-    .chatContent {
-        box-shadow: none;
-    }
-
-    .mainContent {
-        border-radius: 0;
     }
 
     /* ---- 色オーバーライド ----- */
@@ -166,42 +152,8 @@
         border-left-color: transparent;
     }
 
-
-    /* --- グループ名みたいなヘッダー的な奴 ----- */
-    .mainContentHl {
-        background-image: none;
-        border-radius: 0;
-        background: #f0f0f0;
-        border-color: #f0f0f0;
-        color: #000;
-    }
-
-    /* --- ボタン ----- */
-    .button {
-        background-image: none;
-        box-shadow: none;
-        border-radius: 0;
-        border-top: 1px solid #b8b9b6;
-        border-bottom: 1px solid #b8b9b6;
-    }
-
-    .sideContentMenu .button,
-    .sideContentMenu .button:hover,
-    .chatRoomHeaderBtn .button,
-    .chatRoomHeaderBtn .button:hover {
-        border-color: transparent;
-        background: transparent;
-        box-shadow: none;
-    }
-
     .chatFilterMenu .btnNavList li {
         min-width: 32px;
         max-width: 48px;
-    }
-
-    /* テキストボックス */
-    textarea, select, input[type="search"], input[type="text"], input[type="date"] {
-        box-shadow: none;
-        border-radius: 0;
     }
 }
