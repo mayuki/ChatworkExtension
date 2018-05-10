@@ -65,13 +65,6 @@ module ChatworkExtension {
 
             // DOMContentLoaded を監視してそれをonReadyにする(この時点ではChatworkが初期化されていない)
             document.addEventListener('DOMContentLoaded', () => {
-                this.observeNewChatContent();
-                this.observeNewGroup();
-                this.observeAvatarIconInsertion();
-                this.observeToList();
-
-                this.executeExtensionsEvent(x => x.onReady());
-
                 // CWオブジェクトはこちら側から見えないのでブリッジで呼び出すためのと
                 // Chatwork(CW)のinit_loadedを監視して、これがtrueになったらChatworkの読み込みが完了したとするため
                 this.setupCWBridge();
@@ -105,6 +98,11 @@ module ChatworkExtension {
             chrome.runtime.connect();
             window.addEventListener('message', (e) => {
                 if (e.data.sender == 'ChatworkExtension.Bridge.InitializeWatcher' && e.data.command == 'Ready') {
+                    this.observeNewChatContent();
+                    this.observeNewGroup();
+                    this.observeAvatarIconInsertion();
+                    this.observeToList();
+                    this.executeExtensionsEvent(x => x.onReady());
                     this.executeExtensionsEvent(x => x.onChatworkReady());
                 }
             });

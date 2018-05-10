@@ -144,8 +144,8 @@ module ChatworkExtension.Extensions {
         _filterRe: RegExp;
 
         onReady(): void {
-            var filterMenuE = document.getElementById('_chatFilterMenu');
-            filterMenuE.style.height = '74px';
+            //var filterMenuE = document.getElementById('_chatFilterMenu');
+            //filterMenuE.style.height = '74px';
         }
 
         onChatworkReady(): void {

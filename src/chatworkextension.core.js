@@ -1,7 +1,7 @@
 /// <reference path="references.d.ts" />
 var ChatworkExtension;
 (function (ChatworkExtension) {
-    var ExtensionManager = (function () {
+    var ExtensionManager = /** @class */ (function () {
         function ExtensionManager() {
         }
         ExtensionManager.setup = function () {
@@ -59,11 +59,6 @@ var ChatworkExtension;
             this.executeExtensionsEvent(function (x) { return x.initialize(); });
             // DOMContentLoaded を監視してそれをonReadyにする(この時点ではChatworkが初期化されていない)
             document.addEventListener('DOMContentLoaded', function () {
-                _this.observeNewChatContent();
-                _this.observeNewGroup();
-                _this.observeAvatarIconInsertion();
-                _this.observeToList();
-                _this.executeExtensionsEvent(function (x) { return x.onReady(); });
                 // CWオブジェクトはこちら側から見えないのでブリッジで呼び出すためのと
                 // Chatwork(CW)のinit_loadedを監視して、これがtrueになったらChatworkの読み込みが完了したとするため
                 _this.setupCWBridge();
@@ -96,6 +91,11 @@ var ChatworkExtension;
             chrome.runtime.connect();
             window.addEventListener('message', function (e) {
                 if (e.data.sender == 'ChatworkExtension.Bridge.InitializeWatcher' && e.data.command == 'Ready') {
+                    _this.observeNewChatContent();
+                    _this.observeNewGroup();
+                    _this.observeAvatarIconInsertion();
+                    _this.observeToList();
+                    _this.executeExtensionsEvent(function (x) { return x.onReady(); });
                     _this.executeExtensionsEvent(function (x) { return x.onChatworkReady(); });
                 }
             });
@@ -197,14 +197,14 @@ var ChatworkExtension;
             });
             observer.observe(targetElement, { childList: true, subtree: true, characterData: false, attributes: false });
         };
+        ExtensionManager.LoadExtensionTypes = [];
+        ExtensionManager.extensions = [];
+        ExtensionManager._callBridgeQueue = {};
+        ExtensionManager.injectUserCustomScripts = [];
         return ExtensionManager;
     }());
-    ExtensionManager.LoadExtensionTypes = [];
-    ExtensionManager.extensions = [];
-    ExtensionManager._callBridgeQueue = {};
-    ExtensionManager.injectUserCustomScripts = [];
     ChatworkExtension.ExtensionManager = ExtensionManager;
-    var ExtensionBase = (function () {
+    var ExtensionBase = /** @class */ (function () {
         function ExtensionBase() {
         }
         ExtensionBase.prototype.initialize = function () { };
@@ -227,7 +227,7 @@ var ChatworkExtension;
 (function (ChatworkExtension) {
     var Utility;
     (function (Utility) {
-        var ValueObserver = (function () {
+        var ValueObserver = /** @class */ (function () {
             function ValueObserver(onCheck, onComplete) {
                 var _this = this;
                 this._onCheck = onCheck;
