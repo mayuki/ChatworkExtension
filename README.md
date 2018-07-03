@@ -1,4 +1,6 @@
-﻿Chatwork Extensions
+**Deprecated: この拡張はメンテナンスを終了しました。長らくのご愛顧ありがとうございました。[Chat++ for ChatWork](https://chrome.google.com/webstore/detail/chat%20%20-for-chatwork/amhfnpimdfcdcpnchjionbddjjbmofnl)などの拡張をご利用ください。**
+
+Chatwork Extensions
 ===================
 
 主な機能
