@@ -1,1 +1,782 @@
-.__x-syntaxhighlight-code{font-family:Consolas,monospace;line-height:1.25}#_chatFilterMenu{height:74px!important}._cwLTList{max-height:360px!important;height:360px!important}.__x-ResizeGroupListHeight-enabled .chatListTitleArea{float:left}.__x-ResizeGroupListHeight-enabled .chatListTitleArea+.incomplete{position:absolute;right:0;-webkit-transform:scale(.9);transform:scale(.9);margin-left:10px;width:100px;text-align:left}.__x-ResizeGroupListHeight-enabled #_roomListItems .roomListItem{height:20px;min-height:0;padding:1px 0 5px 10px}.__x-ResizeGroupListHeight-enabled #_roomListItems .roomListItem__iconContainer{width:16px;height:24px}.__x-ResizeGroupListHeight-enabled #_roomListItems .roomListItem__iconContainer .avatarMedium{width:16px;height:16px}.__x-ResizeGroupListHeight-enabled .roomListItem__roomInfo{width:calc(100% - 36px)}.__x-ResizeGroupListHeight-enabled .roomListItem__roomName{display:inline}.__x-ResizeGroupListHeight-enabled .roomListBadges{position:absolute;right:24px;top:6px;-webkit-transform:scale(.8);transform:scale(.8)}.__x-ResizeGroupListHeight-enabled .roomListItem__pinContainer{top:0}.__x-ResizeGroupListHeight-enabled .roomListItem__pin{-webkit-transform:scale(.8);transform:scale(.8);margin-top:4px}.__x-ResizeGroupListHeight-enabled .roomListBadges__unreadBadge{max-width:64px}.__x-ResizeGroupListHeight-enabled .roomListBadges__unreadBadgeText{max-width:64px}.__x-ResizeGroupListHeight-enabled .roomListBadges__unreadBadge--hasMemtion .roomListBadges__unreadBadgeText{margin-right:16px}.__x-ResizeGroupListHeight-enabled .roomListBadges__unreadBadge--hasMemtion:after{content:"TO";position:absolute;top:-3px;right:-9px;box-sizing:border-box;width:24px;height:24px;border-radius:50%;border:2px solid #f2f2f2;background-color:#00bf9b;color:#fff;text-align:center}.__x-ResizeGroupListHeight-enabled .chatListMeta{left:31px;font-size:.9em}.__x-ResizeGroupListHeight-enabled .chatListMeta:after{content:'';display:block;clear:both}.__x-FlatStyle-enabled ._roomLink.__x-pinnedLink:not(.roomListItem--selected){background-color:#e8e8e8}.__x-FlatStyle-enabled ._roomLink.__x-pinnedLink:not(.roomListItem--selected):hover{background-color:#f2f2f2}.__x-FlatStyle-enabled ._roomLink.__x-pinnedLink+._roomLink:not(.__x-pinnedLink){border-top:4px solid #ccc}.__x-FlatStyle-enabled .chatRoomListArea .menuListTitleSelected,.__x-FlatStyle-enabled .chatRoomListArea .menuListTitleSelected:hover{text-shadow:none;background-color:#98958a}.__x-FlatStyle-enabled .globalHeader{border-color:#232323}.__x-FlatStyle-enabled .globalHeader:after{display:none}.__x-FlatStyle-enabled .adminNavi,.__x-FlatStyle-enabled .helpMenu,.__x-FlatStyle-enabled .myStatusButton{border-right-color:transparent;border-left-color:transparent}.__x-FlatStyle-enabled .chatFilterMenu .btnNavList li{min-width:32px;max-width:48px}
+.__x-syntaxhighlight-code {
+  font-family: Consolas, monospace;
+  line-height: 1.25
+}
+
+#_chatFilterMenu {
+  height: 74px!important
+}
+
+._cwLTList {
+  max-height: 360px!important;
+  height: 360px!important
+}
+
+.__x-ResizeGroupListHeight-enabled .chatListTitleArea {
+  float: left
+}
+
+.__x-ResizeGroupListHeight-enabled .chatListTitleArea+.incomplete {
+  position: absolute;
+  right: 0;
+  -webkit-transform: scale(.7);
+  transform: scale(.7);
+  margin-left: 10px;
+  width: 100px;
+  text-align: left
+}
+
+.__x-ResizeGroupListHeight-enabled #_roomListItems .roomListItem {
+  height: 20px;
+  min-height: 0;
+  padding: 2px 0 6px 10px;
+}
+
+.__x-ResizeGroupListHeight-enabled #_roomListItems .roomListItem__iconContainer {
+  width: 16px;
+  height: 20px;
+}
+
+.__x-ResizeGroupListHeight-enabled #_roomListItems .roomIcon img {
+  width: 16px;
+  height: 16px
+}
+
+.__x-ResizeGroupListHeight-enabled .roomListItem__roomName {
+  display: inline
+}
+
+.__x-ResizeGroupListHeight-enabled .roomListBadges {
+  position: absolute;
+  right: 8px;
+  top: 4px;
+  -webkit-transform: scale(.7);
+  transform: scale(.7)
+}
+
+.__x-ResizeGroupListHeight-enabled .roomListItem__pinContainer {
+  top: 0
+}
+
+.__x-ResizeGroupListHeight-enabled .roomListItem__pin {
+  -webkit-transform: scale(.7);
+  transform: scale(.7)
+}
+
+.__x-ResizeGroupListHeight-enabled .chatListMeta {
+  left: 31px;
+  font-size: .9em
+}
+
+.__x-ResizeGroupListHeight-enabled .chatListMeta:after {
+  content: '';
+  display: block;
+  clear: both
+}
+
+.__x-FlatStyle-enabled .sideContent {
+  background: #f0f0f0
+}
+
+.__x-FlatStyle-enabled .menuListTitle>li {
+  overflow: hidden;
+  padding: 2.5px 5px;
+  border-top-color: rgba(0, 0, 0, .12)
+}
+
+.__x-FlatStyle-enabled ._roomLink.__x-pinnedLink:not(.roomListItem--selected) {
+  background-color: #e8e8e8
+}
+
+.__x-FlatStyle-enabled ._roomLink.__x-pinnedLink:not(.roomListItem--selected):hover {
+  background-color: #f2f2f2
+}
+
+.__x-FlatStyle-enabled ._roomLink.__x-pinnedLink+._roomLink:not(.__x-pinnedLink) {
+  border-top: 4px solid #ccc
+}
+
+.__x-FlatStyle-enabled .sideContentHl {
+  background: #f0f0f0;
+  color: #000;
+  border-color: #f0f0f0
+}
+
+.__x-FlatStyle-enabled .chatFilterMenu {
+  box-shadow: none;
+  border-bottom-color: #f0f0f0
+}
+
+.__x-FlatStyle-enabled .chatListUnreadNum {
+  box-shadow: none;
+  background-image: none
+}
+
+.__x-FlatStyle-enabled .chatRoomListArea .menuListTitleSelected, .__x-FlatStyle-enabled .chatRoomListArea .menuListTitleSelected:hover {
+  text-shadow: none;
+  background-color: #98958a
+}
+
+.__x-FlatStyle-enabled .sideTitleBtn {
+  right: 40px;
+  z-index: 2
+}
+
+.__x-FlatStyle-enabled .chatContent {
+  box-shadow: none
+}
+
+.__x-FlatStyle-enabled .mainContent {
+  border-radius: 0
+}
+
+.__x-FlatStyle-enabled .globalHeader {
+  border-color: #232323
+}
+
+.__x-FlatStyle-enabled .globalHeader:after {
+  display: none
+}
+
+.__x-FlatStyle-enabled .adminNavi, .__x-FlatStyle-enabled .helpMenu, .__x-FlatStyle-enabled .myStatusButton {
+  border-right-color: transparent;
+  border-left-color: transparent
+}
+
+.__x-FlatStyle-enabled .mainContentHl {
+  background-image: none;
+  border-radius: 0;
+  background: #f0f0f0;
+  border-color: #f0f0f0;
+  color: #000
+}
+
+.__x-FlatStyle-enabled .button {
+  background-image: none;
+  box-shadow: none;
+  border-radius: 0;
+  border-top: 1px solid #b8b9b6;
+  border-bottom: 1px solid #b8b9b6
+}
+
+.__x-FlatStyle-enabled .sideContentMenu .button, .__x-FlatStyle-enabled .sideContentMenu .button:hover, .__x-FlatStyle-enabled .chatRoomHeaderBtn .button, .__x-FlatStyle-enabled .chatRoomHeaderBtn .button:hover {
+  border-color: transparent;
+  background: transparent;
+  box-shadow: none
+}
+
+.__x-FlatStyle-enabled .chatFilterMenu .btnNavList li {
+  min-width: 32px;
+  max-width: 48px
+}
+
+.__x-FlatStyle-enabled textarea, .__x-FlatStyle-enabled select, .__x-FlatStyle-enabled input[type=search], .__x-FlatStyle-enabled input[type=text], .__x-FlatStyle-enabled input[type=date] {
+  box-shadow: none;
+  border-radius: 0
+}
+
+body, pre, input, select, textarea, button {
+  font-family: -apple-system, BlinkMacSystemFont, ".SFNSDisplay-Regular", Noto Sans CJK JP Demilight, Segoe UI, Hiragino Sans, "ヒラギノ角ゴシック", Hiragino Kaku Gothic ProN, "ヒラギノ角ゴ ProN W3", Meiryo, "メイリオ", MS PGothic, "ＭＳ Ｐゴシック", sans-serif
+}
+
+.wrapper {
+  background: #ddd
+}
+
+._cwLTList {
+  max-height: 300px!important;
+  height: 260px!important;
+  min-height: 260px!important
+}
+
+.__x-ResizeGroupListHeight-enabled #_roomListItems li {
+  height: 25px;
+  min-height: 0;
+  padding-left: 10px;
+  font-size: 95%;
+  height: auto
+}
+
+.__x-ResizeGroupListHeight-enabled .roomListItem__roomInfo {
+  color: #c4c8d5;
+  width: calc(85%);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis
+}
+
+.roomDescription__avatar--group {
+  border-radius: 30px;
+  background-color: #fff;
+  width: 30px;
+  height: 30px;
+  border: 1px #a7a6a6 solid
+}
+
+div#_subRoomDescriptionWrapper {
+  background-color: transparent
+}
+
+.subRoomInformation__main {
+  padding: 10px;
+  position: relative;
+  min-height: 12em
+}
+
+div#_subRoomDescriptionWrapper {
+  min-height: 12em
+}
+
+#_chatFilterMenu {
+  height: 38px!important;
+  margin-top: 15px
+}
+
+input[type=search] {
+  display: none
+}
+
+roomTask__emptyContainer {
+  display: none
+}
+
+.chatRoomHeader {
+  background-color: #6a98af
+}
+
+h1#_roomTitle {
+  color: #fff
+}
+
+.chatRoomHeader__pin {
+  fill: #c4c8d5
+}
+
+.chatInput__textarea--existExternalUser {
+  background: #fff
+}
+
+.roomListItem__hasOthers {
+  visibility: hidden
+}
+
+.roomListItem__roomInfoContainer {
+  padding-top: 3px;
+  overflow: hidden;
+  padding-left: 5px!important
+}
+
+.ico35Other {
+  visibility: hidden
+}
+
+.roomFilterMenu__typeGroup {
+    left: 40px;
+    right: 60px;
+}
+
+.roomFilterMenu__homeIcon {
+  color: #c4c8d5
+}
+
+.roomFilterMenu__unreadIcon {
+  color: #c4c8d5
+}
+
+.roomFilterMenu__mentionIcon {
+  color: #c4c8d5
+}
+
+.roomFilterMenu__taskIcon {
+  color: #c4c8d5
+}
+
+.roomFilterMenu__categoryIcon {
+    color: #c4c8d5;
+}
+
+.roomList__categoryTitleContainer {
+    border-bottom: 1px dotted #676863;
+    color: #b1d6ed;
+}
+
+.roomList__categoryCancelIcon {
+    fill: #f5f5f4;
+}
+.roomListItem .roomIcon .avatarMedium {
+  border-radius: 20px;
+  background-color: #fff;
+  border: 1px #a7a6a6 solid
+}
+
+div#_subRoomDescription>pre {
+  font-size: 12px!important
+}
+
+.globalHeaderBranding__chatworkSvgLogo {
+  -webkit-filter: saturate(50%) hue-rotate(207deg);
+  filter: saturate(50%) hue-rotate(207deg)
+}
+
+.roomFilterMenu__taskCount {
+  background-color: #006a9c
+}
+
+.roomFilterMenu__unreadCount {
+  background-color: #006a9c
+}
+
+.roomFilterMenu__mentionCount {
+  background-color: #006a9c
+}
+
+.globalHeaderNavItem__badge {
+  background-color: #006a9c
+}
+
+.roomListContainer__title {
+  color: #c4c8d5
+}
+
+.__x-ResizeGroupListHeight-enabled #_roomListItems .roomListItem {
+  padding: 3px 0 6px 10px
+}
+
+.roomListContainer {
+  background-color: #34362f
+}
+
+.roomListContainer__header {
+  background-color: #34362f;
+  border-bottom: 0
+}
+
+.roomFilterMenu {
+  background-color: #34362f;
+  border-bottom: 0
+}
+
+.roomListItem {
+  border-bottom: 0
+}
+
+.roomTask__emptyContainer {
+  display: none
+}
+
+div#_subEditRoomInfo {
+  background-color: transparent
+}
+
+.roomLimitOver {
+  box-shadow: none;
+  padding: 10px 0;
+  margin-top: 15px;
+  text-align: center
+}
+
+#_searchResultChatList .roomListItem__roomName.roomListItem__roomName {
+  color: #333!important
+}
+
+li.roomListItem--selected p.roomListItem__roomName.roomListItem__roomName {
+  color: #fff
+}
+
+.roomListItem--selected:hover p.roomListItem__roomName.roomListItem__roomName {
+  color: #fff
+}
+
+.searchEm {
+  color: #216b9f;
+  font-weight: 700
+}
+
+.roomListItem--selected {
+  background-color: #5289a5
+}
+
+.roomListItem:hover {
+  color: #333!important;
+  background-color: #5289a5;
+  fill-opacity: .5
+}
+
+.roomListItem__roomInfoContainer>.roomListItem__roomInfo p.roomListItem__roomName {
+  color: #c4c8d5;
+  margin-bottom: 3px;
+}
+
+.roomListItem__roomInfoContainer>.roomListItem__roomInfo p.roomListItem__roomName--unread {
+  color: #96d7f5!important
+}
+
+.__x-ResizeGroupListHeight-enabled #_roomListItems .roomIcon img {
+  margin-bottom: 5px
+}
+
+.roomListItem__pin {
+  fill: #a8b2b6
+}
+
+.__x-FlatStyle-enabled .button {
+  background-image: none;
+  box-shadow: none;
+  border-radius: 0;
+  border: none;
+  background-color: #34362f;
+  margin: .5px;
+  color: #fff
+}
+
+a.button.btnLarge {
+  background-color: transparent
+}
+
+div#_chatFileAll {
+  background-color: transparent
+}
+
+div#_chatRoomSetting {
+  background-color: transparent
+}
+
+.chatTimeLineMessageMention .actionNav {
+  background: #dcf0fa;
+  border-right: 1px solid #dcf0fa;
+  border-bottom: 1px solid #b1d6ed;
+  border-left: 1px solid #dcf0fa
+}
+
+.chatTimeLineMessageMention .chatTimeLineMessageInner {
+  border-top: 1px solid #dcf0fa;
+  border-bottom: 1px solid #dcf0fa
+}
+
+.chatTimeLineMessageMention .chatTimeLineMessageInner .chatTimeLineMessageHover {
+  border-top: 1px solid #dcf0fa;
+  border-bottom: 1px solid #dcf0fa
+}
+
+.chatTimeLineMessageMention {
+  background: rgba(220, 240, 250, .37)
+}
+
+.chatTimeLineMessageMention .chatTimeLineMessageHover {
+  background: rgba(220, 240, 250, .37)
+}
+
+.messageBadge .chatTimeLineReply {
+  background-color: #8d969c
+}
+
+.messageBadge .chatTimeLineTo {
+  background-color: #5c85a3
+}
+
+.messageBadge__avatar {
+  border: 1px solid #5c85a3
+}
+
+div#_memberAdditionSelectAllBtn {
+  background-color: transparent
+}
+
+.js_invitationLinkBtnCopy._button._cwBN.button {
+  color: #fff
+}
+
+._cwDGButton._cwDGButtonCancel.button.buttonGray {
+  background-color: #c8c6c6;
+  margin-left: 10px
+}
+
+#_chatContent::-webkit-scrollbar {
+  width: 8px;
+  border: none
+}
+
+#_roomListArea::-webkit-scrollbar {
+  width: 4px;
+  border: none
+}
+
+#_subContentArea::-webkit-scrollbar {
+  width: 4px;
+  border: none
+}
+
+::-webkit-scrollbar-track {
+  visibility: hidden
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #5289a5;
+  border-radius: 7px;
+  border: none
+}
+
+ul#_subRoomMemberList img._avatarHoverTip._avatarClickTip.avatarClickTip._avatar {
+  border: 1px solid #7e7d7d;
+  -webkit-filter: grayscale(80%) hue-rotate(180deg);
+  filter: grayscale(80%) hue-rotate(180deg)
+}
+
+._roomLink._moveButton.button {
+  color: #fff
+}
+
+.btnGroup .button+.button {
+  color: #fff
+}
+
+._joinLive.button {
+  color: #fff
+}
+
+.roomLimitOver__text {
+  margin-bottom: 5px;
+  display: none
+}
+
+.uiDropDown__button:hover {
+  border-color: transparent;
+  background-color: transparent
+}
+
+.uiDropDown__button {
+  height: 24px;
+  padding: 0 2px 0 8px;
+  border: 1px solid rgba(169, 167, 167, 0);
+  background-color: #787777
+}
+
+.uiDropDown__button:hover{background-color:#545454}
+.uiDropDown__button:hover .uiDropDown__labelIcon{fill:#787777}
+.uiDropDown__button:hover .uiDropDown__icon{fill:#787777}
+
+
+.roomLimitOver__moreLoadButton {
+  border: 1px solid transparent;
+  color: #34362f;
+  background-color: #787777
+}
+
+._cwDGButton.button.buttonGray {
+  background-color: #b4b4b4
+}
+
+img#_subRoomIcon {
+  width: 30px;
+  height: 30px
+}
+
+svg.addTaskContainer__assigneeAddButtonIcon {
+  fill: #fff
+}
+
+svg.addTaskContainer__limitSelectButtonIcon {
+  fill: #fff
+}
+
+span.icoFontInfo.marginRight {
+  display: none
+}
+
+code.chatCode.hljs {
+  background-color: #f3f3f3;
+  border: 1px dotted #abaaaa
+}
+
+svg.fileWindowPagerContainer__pagerIcon {
+  fill: #ccc
+}
+
+.timelineMessage--mention {
+    background: #f0f9fe;
+}
+
+.timelineMessage__body--mention {
+    border-top: 1px solid #dcf0fa;
+    border-bottom: 1px solid #dcf0fa;
+}
+
+
+.timelineMessage__body--mention.chatTimeLineMessageHover{
+    background:#f0f9fe;
+    border-top:1px solid #dcf0fa;
+    border-bottom:1px solid #dcf0fa;
+}
+
+.timelineMessage--mention{
+    background:#f0f9fe;
+}
+
+.timelineMessage--mention .actionNav{
+    background:#f0f9fe;border-right:1px solid #dcf0fa;
+    border-bottom:1px solid #dcf0fa;
+    border-left:1px solid #dcf0fa;
+}
+
+.timelineMessage--jumpMessage{
+    background:#f0f9fe;
+}
+
+.timelineMessage__message> .title {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    margin: 6px 0px 4px 0px;
+    padding: 4px 8px;
+    background: #f3f3f3;
+    border-left: #999 solid 5px;
+    font-weight: 600;
+}
+
+.taskMine {
+    background: #fff;
+}
+
+.messageBadge .chatTimeLineReply:hover{
+background-color:#8d969c;
+}
+
+.messageBadge .chatTimeLineReply:active{
+background-color:#8d969c;
+}
+
+.messageBadge .chatTimeLineReply__icon{
+width:14px;height:14px;fill:#fff;
+}
+
+div#_roominfoSelectAllBtn {
+    background-color: #dedede;
+}
+
+
+li.roomListBadges__taskBadge {
+  color: #006b9c
+}
+
+span.roomListBadges__taskBadgeIcon.icoFontActionTask {
+  color: #006b9c
+}
+
+
+
+/* 自分宛ではない未読アイコン */
+.roomListBadges__unreadBadge{
+    background-color:#9a9a9a;
+}
+
+.roomListItem--selected .roomListBadges__unreadBadge{
+    background-color:#ccc;
+}
+
+
+/* 自分宛の未読アイコン */
+.roomListBadges__mentionBadge{
+    background-color:#328ba7;
+}
+
+.roomListItem--selected .roomListBadges__mentionBadge{
+    background-color:#328ba7;
+}
+
+.roomListItem--selected .roomListBadges__mentionBadgeIcon{
+    color:#fff;
+}
+
+div#_dropZone {
+    width: auto !important;
+    height: 97% !important;
+    display: block;
+}
+
+
+
+._cwTTTriangle.tooltipTriangle.tooltipTriangle--whiteBottom {
+    display: none !important;
+}
+
+.fileDropZone {
+    border: 1px dotted #999;
+    background: transparent !important;
+}
+
+div#_fileDrop {
+    top: 3% !important;
+    left: 5% !important;
+    width: 90%;
+    height: 90%;
+    background-color: #ffffff4f !important;
+}
+
+.fileDropZone>p {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    vertical-align: middle;
+    margin-top: 30%;
+    color: #f5f5f4 !important;
+}
+
+.tooltipTriangle.tooltipTriangle--whiteTop {
+    visibility: hidden;
+    display: none;
+}
+
+.taskActions__icon {
+    fill: #ffffff;
+}
+
+.promotionArea {
+    display: none !important;
+    visibility: hidden !important;
+}
+
+
+span.linkStatus.extended {
+    float: inherit !important;
+}
+
+.roomListItem {
+    background-color: #34362f;
+}
+.roomListItem--selected {
+    background-color: #5289a5;
+}
+
+.roomListItem__iconContainer .avatarMedium {
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    margin-bottom: 3px;
+    background-color: #fff;
+}
+
+.roomListHeader__myChatIcon {
+    fill: #fff;
+}
+.roomListHeader__roomFilterListContainer {
+    color: #fff;
+}
+.roomListHeader__roomFilterListContainer--open {
+    color: #34362f;
+}
+.roomListHeader__roomFilterListTriangleDown {
+    fill: #fff;
+}
+.roomListHeader__roomFilterListTriangleDown--open {
+    fill: #34362f;
+}
+.uiDropDown__labelIconContainer {
+    margin-right: 6px;
+}
+
+div#_sideContentMenu__header {
+    background-color: #34362f;
+    border-bottom: 1px #34362f;
+}
+
+
